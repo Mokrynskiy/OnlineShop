@@ -1,0 +1,6 @@
+@OnlineShop.Services.DiscountAPI_HostAddress = http://localhost:5102
+
+GET {{OnlineShop.Services.DiscountAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
