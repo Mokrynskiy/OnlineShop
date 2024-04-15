@@ -19,6 +19,10 @@ namespace OnlineShop.Web.Controllers
             {
                 discountList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DiscountDto>>(Convert.ToString(response.Result));
             }
+            else
+            {
+                TempData["error"] = response?.Message;
+            }
             return View(discountList);
         }
         public async Task<IActionResult> CreateDiscount()
@@ -26,17 +30,22 @@ namespace OnlineShop.Web.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateDiscount(DiscountDto discountDto)
+        public async Task<IActionResult> CreateDiscount(DiscountDto model)
         {
             if(ModelState.IsValid)
             {
-                ResponseDto? response = await _discountService.CreateDiscountAsync(discountDto);
+                ResponseDto? response = await _discountService.CreateDiscountAsync(model);
                 if (response != null && response.IsSuccess)
                 {
-                    return RedirectToAction("DiscountIndex");
+                    TempData["success"] = "Скидка успешно добавлена!";
+                    return RedirectToAction(nameof(DiscountIndex));
+                }
+                else
+                {
+                    TempData["error"] = response?.Message;
                 }
             }
-            return View(discountDto);
+            return View(model);
         }
         public async Task<IActionResult> DeleteDiscount(int discountId)
         {
@@ -47,6 +56,25 @@ namespace OnlineShop.Web.Controllers
                 if (model != null)
                 {
                     return View(model);
+                }
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteDiscount(DiscountDto model)
+        {
+            ResponseDto? response = await _discountService.DeleteDiscountAsync(model.Id);
+            if (response != null && response.IsSuccess)
+            {
+                DiscountDto? responce = Newtonsoft.Json.JsonConvert.DeserializeObject<DiscountDto>(Convert.ToString(response.Result));
+                if (model != null)
+                {
+                    TempData["success"] = "Скидка успешно удалена!";
+                    return RedirectToAction(nameof(DiscountIndex));
+                }
+                else
+                {
+                    TempData["error"] = response?.Message;
                 }
             }
             return NotFound();
