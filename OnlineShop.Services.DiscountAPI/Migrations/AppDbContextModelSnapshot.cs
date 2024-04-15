@@ -41,7 +41,7 @@ namespace OnlineShop.Services.DiscountAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Discounts");
+                    b.ToTable("Discounts", (string)null);
 
                     b.HasData(
                         new
