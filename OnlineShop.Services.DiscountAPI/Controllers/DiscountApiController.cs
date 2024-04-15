@@ -6,7 +6,7 @@ using OnlineShop.Services.DiscountAPI.Models.Dto;
 
 namespace OnlineShop.Services.DiscountAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/discount")]
     [ApiController]
     public class DiscountApiController : ControllerBase
     {

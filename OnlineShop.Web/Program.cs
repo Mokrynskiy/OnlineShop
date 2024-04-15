@@ -4,9 +4,9 @@ using OnlineShop.Web.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IDiscountService, DiscountService>();
-
 SD.DiscountAPIBase = builder.Configuration["ServiceUrls:DiscountAPI"];
 
 builder.Services.AddScoped<IBaseService,BaseService>();

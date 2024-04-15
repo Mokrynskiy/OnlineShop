@@ -1,0 +1,33 @@
+﻿@model DiscountDto
+
+<form asp-action="DeleteDiscount">
+    <br />
+    <h1 class="text-white text-center">Удаление скидки</h1>
+    <hr />
+    <div class="row">
+        <div class="col-2">
+            <label class="control-lable pt-2" style="font-size:20px;">Код скидки</label>
+        </div>
+        <div class="col-10 pb-3">
+            <input asp-for="DiscountCode" disabled class="form-control" />
+        </div>
+        <div class="col-2">
+            <label class="control-lable pt-2" style="font-size:20px;">Сумма скидки</label>
+        </div>
+        <div class="col-10 pb-3">
+            <input asp-for="DiscountAmount" disabled class="form-control" />            
+        </div>
+        <div class="col-2">
+            <label class="control-lable pt-2" style="font-size:20px;">Минимальная сумма заказа</label>
+        </div>
+        <div class="col-10 pb-3">
+            <input asp-for="MinAmount" disabled class="form-control" />            
+        </div>
+        <div class="col-5 offset-2">
+            <a asp-action="DiscountIndex" class="btn-primary btn form-control">Назад</a>
+        </div>
+        <div class="col-5">
+            <input type="submit" value="Удалить" class="btn btn-danger form-control" />
+        </div>
+    </div>
+</form>
