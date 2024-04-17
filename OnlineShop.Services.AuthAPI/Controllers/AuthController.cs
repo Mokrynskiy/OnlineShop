@@ -37,7 +37,7 @@ namespace OnlineShop.Services.AuthAPI.Controllers
             if (loginResponse.User == null)
             {
                 _response.IsSuccess = false;
-                _response.Message = "Username or password is incorrect";
+                _response.Message = "Неверное имя пользователя или пароль.";
                 return BadRequest(_response);
             }
             _response.Result = loginResponse;

@@ -13,7 +13,5 @@ namespace OnlineShop.Services.ShoppingCartAPI.Models
         public decimal Discount { get; set; }
         [NotMapped]
         public decimal CartTotal { get; set; }
-
-
     }
 }

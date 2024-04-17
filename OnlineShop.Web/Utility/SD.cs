@@ -3,6 +3,10 @@
     public class SD
     {
         public static string DiscountAPIBase { get; set; }
+        public static string AuthAPIBase { get; set; }
+        public const string RoleAdmin = "ADMIN";
+        public const string RoleCustomer = "CUSTOMER";
+        public const string TocenCookie = "JWTToken";
         public enum ApiType
         {
             GET, 
