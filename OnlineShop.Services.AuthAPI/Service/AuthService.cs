@@ -47,7 +47,8 @@ namespace OnlineShop.Services.AuthAPI.Service
                     Token = ""
                 };
             }
-            var token = _jwtTokenGenerator.GenerateToken(user);
+            var rols = await _userManager.GetRolesAsync(user);
+            var token = _jwtTokenGenerator.GenerateToken(user, rols);
             UserDto userDto = new()
             {
                 Email = user.Email,
