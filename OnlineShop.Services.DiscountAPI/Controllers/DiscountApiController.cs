@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Services.DiscountAPI.Data;
 using OnlineShop.Services.DiscountAPI.Models;
@@ -8,6 +9,7 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
 {
     [Route("api/discount")]
     [ApiController]
+    [Authorize]
     public class DiscountApiController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -70,6 +72,7 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Post([FromBody] DiscountDto discountDto)
         {
             try
@@ -87,6 +90,7 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
             return _response;
         }
         [HttpPut]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Put([FromBody] DiscountDto discountDto)
         {
             try
@@ -105,6 +109,7 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
         }
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Delete(int id)
         {
             try
