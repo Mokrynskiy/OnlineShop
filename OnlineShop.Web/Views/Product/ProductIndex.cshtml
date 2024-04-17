@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ProductDto>
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-white">Список товаров</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="col-6"></div>
+        <div class="col-6">
+            <a asp-action="CreateProduct" class="btn btn-outline-primary"><i class="bi bi-plus-square">Добавить новый товар</i></a>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Товарная группа
+            </th>
+            <th>
+                Цена
+            </th>
+            <th>
+                Описание
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.ProductCategoryName</td>
+                <td>@item.Price.ToString()</td>
+                <td>@item.Description</td>
+                <td>    
+                        <a asp-action="ProductEdit" asp-route-productId="@item.Id" class="btn btn-success">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <a asp-action="DeleteProduct" asp-route-productId="@item.Id" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }            
+        </tbody>
+    </table>
+</div>

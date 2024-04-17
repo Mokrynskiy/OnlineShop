@@ -3,6 +3,8 @@
     public class SD
     {
         public static string DiscountAPIBase { get; set; }
+        public static string ProductAPIBase { get; set; }
+        public static string ProductCategoryAPIBase { get; set; }
         public static string AuthAPIBase { get; set; }
         public const string RoleAdmin = "ADMIN";
         public const string RoleCustomer = "CUSTOMER";
