@@ -33,8 +33,28 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" asp-controller="Discount" asp-action="DiscountIndex">Скидки</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                            </ul>
+                            </ul>                            
                         </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Auth" asp-action="Login">Вход</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Auth" asp-action="Register">Регистрация</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">@User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Auth" asp-action="Logout">Выход</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
