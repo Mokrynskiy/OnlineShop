@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Onlineshop.Services.ProductCategoryAPI.Models;
 using Onlineshop.Services.ProductCategoryAPI.Models.Dto;
@@ -70,6 +71,7 @@ namespace OnlineShop.Services.ProductCategoryAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Post([FromBody] ProductCategoryDto ProductCategoryDto)
         {
             try
@@ -87,6 +89,7 @@ namespace OnlineShop.Services.ProductCategoryAPI.Controllers
             return _response;
         }
         [HttpPut]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Put([FromBody] ProductCategoryDto ProductCategoryDto)
         {
             try
@@ -103,7 +106,10 @@ namespace OnlineShop.Services.ProductCategoryAPI.Controllers
             }
             return _response;
         }
+
         [HttpDelete]
+        [Route("{id:int}")]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Delete(int id)
         {
             try

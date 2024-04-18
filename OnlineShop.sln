@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Web", "OnlineSho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Services.AuthAPI", "OnlineShop.Services.AuthAPI\OnlineShop.Services.AuthAPI.csproj", "{157863A3-2ABC-472F-8785-D6CBBF5541C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Services.ShoppingCartAPI", "OnlineShop.Services.ShoppingCartAPI\OnlineShop.Services.ShoppingCartAPI.csproj", "{46B329E8-7912-4068-99C4-E15A4AB2A647}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Services.ShoppingCartAPI", "OnlineShop.Services.ShoppingCartAPI\OnlineShop.Services.ShoppingCartAPI.csproj", "{46B329E8-7912-4068-99C4-E15A4AB2A647}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Onlineshop.Services.ProductAPI", "Onlinshop.Services.ProductAPI\Onlineshop.Services.ProductAPI.csproj", "{43D83C32-5086-4E88-BDEE-F8510DAD4452}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Onlinshop.Services.ProductCategoryAPI", "Onlinshop.Services.ProductCategoryAPI\Onlinshop.Services.ProductCategoryAPI.csproj", "{5F7479F5-7E89-43C0-AD9C-E5EEC02DDE55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Onlineshop.Services.ProductCategoryAPI", "Onlinshop.Services.ProductCategoryAPI\Onlineshop.Services.ProductCategoryAPI.csproj", "{5F7479F5-7E89-43C0-AD9C-E5EEC02DDE55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -54,7 +54,7 @@ namespace OnlineShop.Web.Controllers
             {
                 ProductCategoryDto? model = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductCategoryDto>(Convert.ToString(response.Result));
                 if (model != null)
-                {
+                {                    
                     return View(model);
                 }
             }
