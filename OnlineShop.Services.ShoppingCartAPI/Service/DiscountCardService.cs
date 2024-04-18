@@ -24,7 +24,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Service
             var apiContent = await response.Content.ReadAsStringAsync();
             var resp = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
 
-            if (resp.IsSuccess)
+            if (resp != null && resp.IsSuccess)
             {
                 return JsonConvert.DeserializeObject<DiscountDto>(Convert.ToString(resp.Result));
             }

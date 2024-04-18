@@ -6,6 +6,7 @@ using OnlineShop.Services.ShoppingCartAPI;
 using OnlineShop.Services.ShoppingCartAPI.Data;
 using OnlineShop.Services.ShoppingCartAPI.Service;
 using OnlineShop.Services.ShoppingCartAPI.Service.IService;
+using OnlineShop.Services.ShoppingCartAPI.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +18,13 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddHttpClient("Product", x => x.BaseAddress = new Uri(builder.Configuration["ServiceUrls:ProductAPI"]));
 builder.Services.AddScoped<IProductService, ProductService>();
-
-builder.Services.AddHttpClient("DiscountCard", x => x.BaseAddress = new Uri(builder.Configuration["ServiceUrls:DiscountCardAPI"]));
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ApiAuthHttpClientHandler>();
+builder.Services.AddHttpClient("DiscountCard", x => x.BaseAddress = new Uri(builder.Configuration["ServiceUrls:DiscountCardAPI"]))
+    .AddHttpMessageHandler<ApiAuthHttpClientHandler>(); ;
+builder.Services.AddHttpClient("Product", x => x.BaseAddress = new Uri(builder.Configuration["ServiceUrls:ProductAPI"]))
+    .AddHttpMessageHandler<ApiAuthHttpClientHandler>();
 builder.Services.AddScoped<IDiscountCardService, DiscountCardService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -28,17 +32,6 @@ builder.Services.AddSwaggerGen(option =>
 {
     option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
-        //Type = SecuritySchemeType.OAuth2,
-        //Flows = new OpenApiOAuthFlows
-        //{
-        //    Implicit = new OpenApiOAuthFlow
-        //    {
-        //        AuthorizationUrl = new Uri("https://youauthsrv.com/auth/realms/your-realm/protocol/openid-connect/auth"),
-        //    }
-        //},
-        //In = ParameterLocation.Header,
-        //Scheme = JwtBearerDefaults.AuthenticationScheme,
-
         Name = "Authorization",
         Description = "JWT token must be provided",
         In = ParameterLocation.Header,
