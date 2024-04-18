@@ -8,14 +8,20 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IDiscountService, DiscountService>();
+builder.Services.AddHttpClient<IProductService, ProductService>();
+builder.Services.AddHttpClient<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddHttpClient<IAuthService, AuthService>();
 SD.DiscountAPIBase = builder.Configuration["ServiceUrls:DiscountAPI"];
+SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProductAPI"];
+SD.ProductCategoryAPIBase = builder.Configuration["ServiceUrls:ProductCategoryAPI"];
 SD.AuthAPIBase = builder.Configuration["ServiceUrls:AuthAPI"];
 
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<IBaseService,BaseService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opt =>
     {
@@ -46,3 +52,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+//TODO TEST 2
