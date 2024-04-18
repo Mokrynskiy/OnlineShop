@@ -18,7 +18,7 @@ namespace OnlineShop.Web.Service
             {
                 ApiType = ApiType.POST,
                 Data = ProductDto,
-                Url = SD.ProductAPIBase + "/api/Product"
+                Url = SD.ProductAPIBase + "/api/product"
             });
         }
 
@@ -27,7 +27,7 @@ namespace OnlineShop.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = ApiType.DELETE,
-                Url = SD.ProductAPIBase + "/api/Product/" + id
+                Url = SD.ProductAPIBase + "/api/product/" + id
             });
         }
 
@@ -36,7 +36,7 @@ namespace OnlineShop.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = ApiType.GET,
-                Url = SD.ProductAPIBase + "/api/Product"
+                Url = SD.ProductAPIBase + "/api/product"
             });
         }
         
@@ -45,7 +45,7 @@ namespace OnlineShop.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = ApiType.GET,
-                Url = SD.ProductAPIBase + "/api/Product/"+ id
+                Url = SD.ProductAPIBase + "/api/product/"+ id
             });
         }
 
@@ -55,7 +55,7 @@ namespace OnlineShop.Web.Service
             {
                 ApiType = ApiType.PUT,
                 Data = ProductDto,
-                Url = SD.ProductAPIBase + "/api/Product"
+                Url = SD.ProductAPIBase + "/api/product"
             });
         }
     }

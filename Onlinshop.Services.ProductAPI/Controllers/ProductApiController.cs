@@ -7,7 +7,7 @@ using OnlineShop.Services.ProductAPI.Data;
 
 namespace OnlineShop.Services.ProductAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/product")]
     [ApiController]
     public class ProductApiController : ControllerBase
     {
