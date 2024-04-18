@@ -5,6 +5,8 @@ using OnlineShop.Services.ShoppingCartAPI.Data;
 using OnlineShop.Services.ShoppingCartAPI.Models;
 using OnlineShop.Services.ShoppingCartAPI.Models.Dto;
 using OnlineShop.Services.ShoppingCartAPI.Models.DTO;
+using OnlineShop.Services.ShoppingCartAPI.Service;
+using OnlineShop.Services.ShoppingCartAPI.Service.IService;
 
 namespace OnlineShop.Services.ShoppingCartAPI.Controllers
 {
@@ -15,12 +17,16 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         private readonly AppDbContext _db;
         private IMapper _mapper;
         private ResponseDto _response;
+        private IProductService _productService;
+        private IDiscountCardService _discountCardService;
 
-        public CartApiController(AppDbContext db, IMapper mapper)
+        public CartApiController(AppDbContext db, IMapper mapper, IProductService productService, IDiscountCardService discountCardService)
         {
             _db = db;
             _mapper = mapper;
             _response = new ResponseDto();
+            _productService = productService;
+            _discountCardService = discountCardService;
         }
 
         /// <summary>
@@ -81,6 +87,58 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="cartDTO"></param>
+        /// <returns></returns>
+        [HttpPost("ApplyDiscountCard")]
+        public async Task<object> ApplyDiscountCard([FromBody] CartDTO cartDTO)
+        {
+            try
+            {
+                var cartDb = _db.CartHeaders.First(x => x.UserId == cartDTO.CartHeaderDTO.UserId);
+                cartDb.DiscountCard = cartDTO.CartHeaderDTO.DiscountCard;
+
+                _db.CartHeaders.Update(cartDb);
+                await _db.SaveChangesAsync();
+                _response.Result = true;
+            }
+            catch (Exception exp)
+            {
+                _response.Message = exp.Message.ToString();
+                _response.IsSuccess = false;
+            }
+
+            return _response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cartDTO"></param>
+        /// <returns></returns>
+        [HttpPost("RemoveDiscountCard")]
+        public async Task<object> RemoveDiscountCard([FromBody] CartDTO cartDTO)
+        {
+            try
+            {
+                var cartDb = _db.CartHeaders.First(x => x.UserId == cartDTO.CartHeaderDTO.UserId);
+                cartDb.DiscountCard = cartDTO.CartHeaderDTO.DiscountCard;
+
+                _db.CartHeaders.Update(cartDb);
+                await _db.SaveChangesAsync();
+                _response.Result = true;
+            }
+            catch (Exception exp)
+            {
+                _response.Message = exp.Message.ToString();
+                _response.IsSuccess = false;
+            }
+
+            return _response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="cartDetailsId"></param>
         /// <returns></returns>
         [HttpPost("RemoveCart")]
@@ -102,6 +160,46 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
                 await _db.SaveChangesAsync();
 
                 _response.Result = true;
+            }
+            catch (Exception exp)
+            {
+                _response.Message = exp.Message.ToString();
+                _response.IsSuccess = false;
+            }
+
+            return _response;
+        }
+
+        [HttpGet("GetCart")]
+        public async Task<ResponseDto> GetCart(string userId)
+        {
+            try
+            {
+                var cart = new CartDTO()
+                {
+                    CartHeaderDTO = _mapper.Map<CartHeaderDTO>(_db.CartHeaders.First(x => x.UserId == userId))
+                };
+
+                cart.CartDetails = _mapper.Map<IEnumerable<CartDetailsDTO>>(_db.CartDetails.Where(x => x.CartHeaderId == cart.CartHeaderDTO.CartHeaderId));
+                var productDTO = await _productService.GetProducts();
+
+                foreach (var item in cart.CartDetails)
+                {
+                    item.Product = productDTO.FirstOrDefault(x => x.ProductId == item.ProductId);
+                    cart.CartHeaderDTO.CartTotal += item.Count * item.Product.Price;
+                }
+
+                if(!string.IsNullOrEmpty(cart.CartHeaderDTO.DiscountCard))
+                {
+                    var discountCard = await _discountCardService.GetDiscount(cart.CartHeaderDTO.DiscountCard);
+                    if(discountCard != null && cart.CartHeaderDTO.CartTotal > discountCard.MinAmount)
+                    {
+                        cart.CartHeaderDTO.CartTotal -= discountCard.DiscountAmount;
+                        cart.CartHeaderDTO.Discount = discountCard.DiscountAmount;
+                    }
+                }
+
+                 _response.Result = cart;
             }
             catch (Exception exp)
             {
