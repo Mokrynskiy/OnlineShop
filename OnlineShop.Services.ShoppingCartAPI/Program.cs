@@ -19,6 +19,9 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddHttpClient("Product", x => x.BaseAddress = new Uri(builder.Configuration["ServiceUrls:ProductAPI"]));
 builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddHttpClient("DiscountCard", x => x.BaseAddress = new Uri(builder.Configuration["ServiceUrls:DiscountCardAPI"]));
+builder.Services.AddScoped<IDiscountCardService, DiscountCardService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>

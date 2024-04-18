@@ -5,6 +5,7 @@ using OnlineShop.Services.ShoppingCartAPI.Data;
 using OnlineShop.Services.ShoppingCartAPI.Models;
 using OnlineShop.Services.ShoppingCartAPI.Models.Dto;
 using OnlineShop.Services.ShoppingCartAPI.Models.DTO;
+using OnlineShop.Services.ShoppingCartAPI.Service;
 using OnlineShop.Services.ShoppingCartAPI.Service.IService;
 
 namespace OnlineShop.Services.ShoppingCartAPI.Controllers
@@ -17,13 +18,15 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         private IMapper _mapper;
         private ResponseDto _response;
         private IProductService _productService;
+        private IDiscountCardService _discountCardService;
 
-        public CartApiController(AppDbContext db, IMapper mapper, IProductService productService)
+        public CartApiController(AppDbContext db, IMapper mapper, IProductService productService, IDiscountCardService discountCardService)
         {
             _db = db;
             _mapper = mapper;
             _response = new ResponseDto();
             _productService = productService;
+            _discountCardService = discountCardService;
         }
 
         /// <summary>
@@ -184,6 +187,16 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
                 {
                     item.Product = productDTO.FirstOrDefault(x => x.ProductId == item.ProductId);
                     cart.CartHeaderDTO.CartTotal += item.Count * item.Product.Price;
+                }
+
+                if(!string.IsNullOrEmpty(cart.CartHeaderDTO.DiscountCard))
+                {
+                    var discountCard = await _discountCardService.GetDiscount(cart.CartHeaderDTO.DiscountCard);
+                    if(discountCard != null && cart.CartHeaderDTO.CartTotal > discountCard.MinAmount)
+                    {
+                        cart.CartHeaderDTO.CartTotal -= discountCard.DiscountAmount;
+                        cart.CartHeaderDTO.Discount = discountCard.DiscountAmount;
+                    }
                 }
 
                  _response.Result = cart;
