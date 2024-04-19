@@ -90,6 +90,5 @@ namespace OnlineShop.Web.Controllers
             }
             return View(model);
         }
-        
     }
 }
