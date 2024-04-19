@@ -10,7 +10,6 @@ namespace OnlineShop.Services.ProductAPI.Controllers
 {
     [Route("api/product")]
     [ApiController]
-    
     public class ProductApiController : ControllerBase
     {
         private readonly AppDbContext _db;
