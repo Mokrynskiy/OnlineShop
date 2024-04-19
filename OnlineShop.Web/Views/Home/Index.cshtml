@@ -1,12 +1,12 @@
-﻿﻿@{ViewData["Title"] = "Магазин";}
+﻿﻿@{
+    ViewData["Title"] = "Витрина";
+}
 @model IEnumerable<ProductDto>
 
 <div class="text-center">
     <h1 class="display-4">Витрина</h1>
     <form>
-
         <div class="container row">
-
             @foreach (var product in Model)
             {
                 <div class="col-4 ">
@@ -24,9 +24,7 @@
                                         <a asp-action="Details" asp-route-productId="@product.Id"
                                            class="btn btn-success form-control">подробней</a>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
