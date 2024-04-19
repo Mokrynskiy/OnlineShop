@@ -1,16 +1,16 @@
 ﻿﻿@{ViewData["Title"] = "Корзина:";}
-
+@model CartDTO
 ﻿
 
-@if (Model.CartDetails != null & Model.CartDetails.Count() > 0)
+@if (Model != null && Model.CartDetails != null && Model.CartDetails?.Count() > 0)
 {
  
     <form method="post">
         <br />
-        <!--
-            <input asp-for="CartDTO.CartHeaderDTO.UserId" hidden />
-            <input asp-for="CartHeader.CartHeaderId" hidden />
-        -->
+        
+            <input asp-for="CartHeaderDTO.UserId" hidden />
+            <input asp-for="CartHeaderDTO.CartHeaderId" hidden />
+        
         <div class="">
             <div class="card border mt-4 container">
                 <div class="card-header bg-dark text-light ml-0 row ">
@@ -71,26 +71,24 @@
                                 @if (string.IsNullOrEmpty(Model.CartHeaderDTO.DiscountCard))
                                 {
                                     <span>Coupon:</span>
-                                    <!--
-                                    <input asp-for="discountCard" />
-                                    -->
+                                <input asp-for="CartHeaderDTO.DiscountCard" />
                                     <button type="submit" asp-action="ApplyCoupon" class="btn-success"> Добавить </button>    
                                 }
                                 else
                                 {
                                     <span>Coupon:</span>
-                                    <!--
-                                    <input asp-for="discountCard" disabled />
-                                    -->
+                                    
+                                    <input asp-for="CartHeaderDTO.DiscountCard" disabled />
+                                    
                                     <button type="submit" asp-action="RemoveCoupon" class="btn-danger"> Удалить </button>    
                                 }
                         
                         </div>
                         <div class="col-6 text-end">
                                 <span class="text-danger" style="font-size:21px;">  Сумма заказа : @string.Format("{0:c}", Model.CartHeaderDTO.CartTotal) <br /></span>
-                                @if (Model.CartHeader.Discount > 0)
+                            @if (Model.CartHeaderDTO.Discount > 0)
                                 {
-                                    <span class="text-success"> Скидка:  @string.Format("{0:c}", Model.CartHeader.DiscountTotal)</span>
+                                <span class="text-success"> Скидка:  @string.Format("{0:c}", Model.CartHeaderDTO.DiscountTotal)</span>
 
                                 }
                         </div>
