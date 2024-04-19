@@ -27,6 +27,7 @@ namespace OnlineShop.Web.Controllers
         }
         public async Task<IActionResult> CreateDiscount()
         {
+            //TODO CreateDiscount()
             return View();
         }
         [HttpPost]
