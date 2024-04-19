@@ -1,9 +1,9 @@
-﻿using OnlineShop.Services.ShoppingCartAPI.Models.Dto;
+﻿using OnlineShop.Services.ShoppingCartAPI.Models.DTO;
 
 namespace OnlineShop.Services.ShoppingCartAPI.Service.IService
 {
     public interface IDiscountCardService
     {
-        Task<DiscountDto> GetDiscount(string cardCode);
+        Task<DiscountDTO> GetDiscount(string cardCode);
     }
 }

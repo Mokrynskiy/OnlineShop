@@ -1,6 +1,6 @@
-﻿namespace OnlineShop.Services.ShoppingCartAPI.Models.Dto
+﻿namespace OnlineShop.Services.ShoppingCartAPI.Models.DTO
 {
-    public class DiscountDto
+    public class DiscountDTO
     {
         public int Id { get; set; }
         public string DiscountCode { get; set; }

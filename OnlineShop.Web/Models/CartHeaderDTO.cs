@@ -7,5 +7,4 @@ public class CartHeaderDTO
     public string? DiscountCard { get; set; }
     public decimal Discount { get; set; }
     public decimal CartTotal { get; set; }
-    public decimal DiscountTotal => CartTotal * Discount;
 }

@@ -1,6 +1,6 @@
-﻿namespace OnlineShop.Services.ShoppingCartAPI.Models.Dto
+﻿namespace OnlineShop.Services.ShoppingCartAPI.Models.DTO
 {
-    public class ResponseDto
+    public class ResponseDTO
     {
         public object? Result { get; set; }
         public bool IsSuccess { get; set; } = true;

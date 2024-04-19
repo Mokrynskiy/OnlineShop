@@ -88,7 +88,7 @@
                                 <span class="text-danger" style="font-size:21px;">  Сумма заказа : @string.Format("{0:c}", Model.CartHeaderDTO.CartTotal) <br /></span>
                             @if (Model.CartHeaderDTO.Discount > 0)
                                 {
-                                <span class="text-success"> Скидка:  @string.Format("{0:c}", Model.CartHeaderDTO.DiscountTotal)</span>
+                                <span class="text-success"> Скидка:  @string.Format("{0:c}", Model.CartHeaderDTO.Discount * Model.CartHeaderDTO.CartTotal / 100)</span>
 
                                 }
                         </div>

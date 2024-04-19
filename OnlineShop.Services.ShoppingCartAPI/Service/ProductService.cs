@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using OnlineShop.Services.ShoppingCartAPI.Models.Dto;
 using OnlineShop.Services.ShoppingCartAPI.Models.DTO;
 using OnlineShop.Services.ShoppingCartAPI.Service.IService;
 
@@ -18,7 +17,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Service
             var client = _httpClientFactory.CreateClient("Product");
             var response = await client.GetAsync($"/api/product");
             var apiContent = await response.Content.ReadAsStringAsync();
-            var resp = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
+            var resp = JsonConvert.DeserializeObject<ResponseDTO>(apiContent);
 
             if (resp.IsSuccess)
             {

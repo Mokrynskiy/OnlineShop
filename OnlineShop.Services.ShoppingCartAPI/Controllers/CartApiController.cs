@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Services.ShoppingCartAPI.Data;
 using OnlineShop.Services.ShoppingCartAPI.Models;
-using OnlineShop.Services.ShoppingCartAPI.Models.Dto;
-using OnlineShop.Services.ShoppingCartAPI.Models.DTO;
-using OnlineShop.Services.ShoppingCartAPI.Service;
 using OnlineShop.Services.ShoppingCartAPI.Service.IService;
+using OnlineShop.Services.ShoppingCartAPI.Models.DTO;
 
 namespace OnlineShop.Services.ShoppingCartAPI.Controllers
 {
@@ -16,7 +14,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
     {
         private readonly AppDbContext _db;
         private IMapper _mapper;
-        private ResponseDto _response;
+        private ResponseDTO _response;
         private IProductService _productService;
         private IDiscountCardService _discountCardService;
 
@@ -24,7 +22,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         {
             _db = db;
             _mapper = mapper;
-            _response = new ResponseDto();
+            _response = new ResponseDTO();
             _productService = productService;
             _discountCardService = discountCardService;
         }
@@ -35,7 +33,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         /// <param name="cartDTO"></param>
         /// <returns></returns>
         [HttpPost("CartAdd")]
-        public async Task<ResponseDto> CartAdd(CartDTO cartDTO) 
+        public async Task<ResponseDTO> CartAdd(CartDTO cartDTO) 
         {
             try
             {
@@ -142,7 +140,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         /// <param name="cartDetailsId"></param>
         /// <returns></returns>
         [HttpPost("RemoveCart")]
-        public async Task<ResponseDto> RemoveCart(int cartDetailsId)
+        public async Task<ResponseDTO> RemoveCart(int cartDetailsId)
         {
             try
             {
@@ -171,7 +169,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         }
 
         [HttpGet("GetCart")]
-        public async Task<ResponseDto> GetCart(string userId)
+        public async Task<ResponseDTO> GetCart(string userId)
         {
             try
             {
@@ -185,8 +183,8 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
 
                 foreach (var item in cart.CartDetails)
                 {
-                    item.Product = productDTO.FirstOrDefault(x => x.ProductId == item.ProductId);
-                    cart.CartHeaderDTO.CartTotal += item.Count * item.Product.Price;
+                    item.Product = productDTO.FirstOrDefault(x => x.Id == item.ProductId);
+                    cart.CartHeaderDTO.CartTotal += (decimal)(item.Count * item?.Product?.Price ?? 0.00);
                 }
 
                 if(!string.IsNullOrEmpty(cart.CartHeaderDTO.DiscountCard))

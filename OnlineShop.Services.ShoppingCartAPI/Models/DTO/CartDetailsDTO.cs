@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace OnlineShop.Services.ShoppingCartAPI.Models.DTO
+﻿namespace OnlineShop.Services.ShoppingCartAPI.Models.DTO
 {
     public class CartDetailsDTO
     {
@@ -9,7 +6,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Models.DTO
         public int CartHeaderId { get; set; }
         public CartHeaderDTO? CartHeader { get; set; }
         public int ProductId { get; set; }
-        public ProductDTO? Product { get; set; }
+        public ProductDTO?  Product { get; set; }
         public int Count { get; set; }
     }
 }
