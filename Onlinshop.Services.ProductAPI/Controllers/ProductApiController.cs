@@ -9,8 +9,7 @@ using OnlineShop.Services.ProductAPI.Data;
 namespace OnlineShop.Services.ProductAPI.Controllers
 {
     [Route("api/product")]
-    [ApiController]
-    
+    [ApiController]    
     public class ProductApiController : ControllerBase
     {
         private readonly AppDbContext _db;

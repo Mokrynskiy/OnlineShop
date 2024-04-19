@@ -6,15 +6,15 @@ namespace OnlineShop.Web.Controllers
 {
     public class ProductCategoryController : Controller
     {
-        IProductCategoryService _productService;
+        IProductCategoryService _productCategoryService;
         public ProductCategoryController(IProductCategoryService productCategoryService)
         {
-            _productService = productCategoryService;   
+            _productCategoryService = productCategoryService;   
         }
         public async Task<IActionResult> ProductCategoryIndex()
         {
             List<ProductCategoryDto>? ProductCategoryList = new();
-            ResponseDto? response = await _productService.GetAllProductCategorysAsync();
+            ResponseDto? response = await _productCategoryService.GetAllProductCategorysAsync();
             if (response != null && response.IsSuccess)
             {
                 ProductCategoryList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ProductCategoryDto>>(Convert.ToString(response.Result));
@@ -34,7 +34,7 @@ namespace OnlineShop.Web.Controllers
         {
             if(ModelState.IsValid)
             {
-                ResponseDto? response = await _productService.CreateProductCategoryAsync(model);
+                ResponseDto? response = await _productCategoryService.CreateProductCategoryAsync(model);
                 if (response != null && response.IsSuccess)
                 {
                     TempData["success"] = "Товарная группа успешно добавлена!";
@@ -49,7 +49,7 @@ namespace OnlineShop.Web.Controllers
         }
         public async Task<IActionResult> DeleteProductCategory(int productCategoryId)
         {
-            ResponseDto? response = await _productService.GetProductCategoryByIdAsync(productCategoryId);
+            ResponseDto? response = await _productCategoryService.GetProductCategoryByIdAsync(productCategoryId);
             if (response != null && response.IsSuccess)
             {
                 ProductCategoryDto? model = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductCategoryDto>(Convert.ToString(response.Result));
@@ -63,7 +63,7 @@ namespace OnlineShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteProductCategory(ProductCategoryDto model)
         {
-            ResponseDto? response = await _productService.DeleteProductCategoryAsync(model.Id);
+            ResponseDto? response = await _productCategoryService.DeleteProductCategoryAsync(model.Id);
             if (response != null && response.IsSuccess)
             {
                 ProductCategoryDto? responce = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductCategoryDto>(Convert.ToString(response.Result));
