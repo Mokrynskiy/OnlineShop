@@ -8,6 +8,6 @@
         public string Description { get; set; }
         public string PictureUrl { get; set; }
         public string ProductCategoryName { get; set; }
-        public int Count { get; set; } 
+        public int Count { get; set; }
     }
 }

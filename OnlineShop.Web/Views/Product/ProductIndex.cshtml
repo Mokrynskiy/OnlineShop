@@ -20,6 +20,9 @@
                 Название
             </th>
             <th>
+                Фото
+            </th>
+            <th>
                 Товарная группа
             </th>
             <th>
@@ -33,15 +36,13 @@
         <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr>                    
                 <td>@item.Name</td>
+                <td><img src="@item.PictureUrl" /></td>
                 <td>@item.ProductCategoryName</td>
                 <td>@item.Price.ToString()</td>
                 <td>@item.Description</td>
-                <td>    
-                        <a asp-action="ProductEdit" asp-route-productId="@item.Id" class="btn btn-success">
-                            <i class="bi bi-trash"></i>
-                        </a>
+                <td>                            
                         <a asp-action="DeleteProduct" asp-route-productId="@item.Id" class="btn btn-danger">
                         <i class="bi bi-trash"></i>
                     </a>

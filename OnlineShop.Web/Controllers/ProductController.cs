@@ -69,7 +69,12 @@ namespace OnlineShop.Web.Controllers
                 var response = await _productService.UpdateProductAsync(model);
                 if (response != null && response.IsSuccess)
                 {
+                    TempData["success"] = "Товар успешно обновлен!";
                     return RedirectToAction(nameof(ProductIndex));
+                }
+                else
+                {
+                    TempData["error"] = response?.Message;
                 }
             }
             return View(model);

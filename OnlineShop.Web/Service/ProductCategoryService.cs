@@ -20,7 +20,7 @@ namespace OnlineShop.Web.Service
             {
                 ApiType = ApiType.POST,
                 Data = ProductCategoryDto,
-                Url = SD.ProductCategoryAPIBase + "/api/ProductCategory"
+                Url = SD.ProductCategoryAPIBase + "/api/productCategory"
             });
         }
 
@@ -29,7 +29,7 @@ namespace OnlineShop.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = ApiType.DELETE,
-                Url = SD.ProductCategoryAPIBase + "/api/ProductCategory/" + id
+                Url = SD.ProductCategoryAPIBase + "/api/productCategory/" + id
             });
         }
 
@@ -38,7 +38,7 @@ namespace OnlineShop.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = ApiType.GET,
-                Url = SD.ProductCategoryAPIBase + "/api/ProductCategory"
+                Url = SD.ProductCategoryAPIBase + "/api/productCategory"
             });
         }
 
@@ -47,7 +47,7 @@ namespace OnlineShop.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = ApiType.GET,
-                Url = SD.ProductCategoryAPIBase + "/api/ProductCategory/GetByName/"+ name
+                Url = SD.ProductCategoryAPIBase + "/api/productCategory/GetByName/"+ name
             });
         }
 
@@ -56,7 +56,7 @@ namespace OnlineShop.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = ApiType.GET,
-                Url = SD.ProductCategoryAPIBase + "/api/ProductCategory/"+ id
+                Url = SD.ProductCategoryAPIBase + "/api/productCategory/"+ id
             });
         }
 
@@ -66,7 +66,7 @@ namespace OnlineShop.Web.Service
             {
                 ApiType = ApiType.PUT,
                 Data = ProductCategoryDto,
-                Url = SD.ProductCategoryAPIBase + "/api/ProductCategory"
+                Url = SD.ProductCategoryAPIBase + "/api/productCategory"
             });
         }
     }

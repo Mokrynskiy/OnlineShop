@@ -68,7 +68,43 @@ namespace Onlineshop.Services.ProductAPI.Migrations
                             Description = "Тарелка 26 см",
                             Name = "Тарелка",
                             PictureUrl = "https://www.modi.ru/upload/resize_cache/product/b48/250_273_240cd750bba9870f18aada2478b24840a/4iihmyj7kflksk5a1gn8ax3vo21yu2z4.jpg",
-                            Price = 299.0,
+                            Price = 159.0,
+                            ProductCategoryName = "Посуда"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Стеклянная миска",
+                            Name = "Миска",
+                            PictureUrl = "https://www.modi.ru/upload/resize_cache/product/3ee/250_273_240cd750bba9870f18aada2478b24840a/3ee3caeebbef1bff678806669d533334.jpg",
+                            Price = 450.0,
+                            ProductCategoryName = "Посуда"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Стакан 380мл",
+                            Name = "Стакан",
+                            PictureUrl = "https://www.modi.ru/upload/resize_cache/product/c48/250_273_240cd750bba9870f18aada2478b24840a/2ujxde7jjrzhnxuywe19736f01ysw1j0.jpg",
+                            Price = 370.0,
+                            ProductCategoryName = "Посуда"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Банка с бамбуковой крышкой 900мл",
+                            Name = "Банка",
+                            PictureUrl = "https://www.modi.ru/upload/resize_cache/product/acd/250_273_240cd750bba9870f18aada2478b24840a/fp2o38xhuvzz8e8wrc1l2fkyx7wj0y0d.jpg",
+                            Price = 630.0,
+                            ProductCategoryName = "Посуда"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Миска 12х6см",
+                            Name = "Миска",
+                            PictureUrl = "https://www.modi.ru/upload/resize_cache/product/5bc/250_273_240cd750bba9870f18aada2478b24840a/wmkaby02mwvg07yo9duc6et4t46ugenh.jpg",
+                            Price = 420.0,
                             ProductCategoryName = "Посуда"
                         });
                 });

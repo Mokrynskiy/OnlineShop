@@ -22,6 +22,12 @@ namespace OnlineShop.Web.Controllers
             return View(await LoadCartBaseOnLoggedInUser());
         }
 
+        [Authorize]
+        public async Task<IActionResult> Checkout()
+        {
+            return View(await LoadCartBaseOnLoggedInUser());
+        }
+
         public async Task<IActionResult> Remove(int cartDetails)
         {
             var userId = User.Claims.Where(x => x.Type == JwtRegisteredClaimNames.Sub).FirstOrDefault()?.Value;

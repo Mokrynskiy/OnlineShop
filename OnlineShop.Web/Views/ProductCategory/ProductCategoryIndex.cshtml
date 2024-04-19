@@ -10,7 +10,7 @@
     <div class="card-body p-4">
         <div class="col-6"></div>
         <div class="col-6">
-            <a asp-action="CreateProductCategory" class="btn btn-outline-primary"><i class="bi bi-plus-square">Добавить новый товар</i></a>
+            <a asp-action="CreateProductCategory" class="btn btn-outline-primary"><i class="bi bi-plus-square">Добавить новую группу товара</i></a>
         </div>
     </div>
     <table class="table">
@@ -27,7 +27,7 @@
                 <tr>
                     <td>@item.Name</td>
                     <td>
-                        <a asp-action="DeleteProductCategory" asp-route-discountId="@item.Id" class="btn btn-danger">
+                        <a asp-action="DeleteProductCategory" asp-route-productCategoryId="@item.Id" class="btn btn-danger">
                             <i class="bi bi-trash"></i>
                         </a>
                     </td>

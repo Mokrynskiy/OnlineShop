@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Onlineshop.Services.ProductAPI.Models;
 using Onlineshop.Services.ProductAPI.Models.Dto;
@@ -8,7 +9,7 @@ using OnlineShop.Services.ProductAPI.Data;
 namespace OnlineShop.Services.ProductAPI.Controllers
 {
     [Route("api/product")]
-    [ApiController]
+    [ApiController]    
     public class ProductApiController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -71,6 +72,7 @@ namespace OnlineShop.Services.ProductAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Post([FromBody] ProductDto ProductDto)
         {
             try
@@ -88,6 +90,7 @@ namespace OnlineShop.Services.ProductAPI.Controllers
             return _response;
         }
         [HttpPut]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Put([FromBody] ProductDto ProductDto)
         {
             try
@@ -105,6 +108,8 @@ namespace OnlineShop.Services.ProductAPI.Controllers
             return _response;
         }
         [HttpDelete]
+        [Route("{id:int}")]
+        [Authorize(Roles = "ADMIN")]
         public ResponseDto Delete(int id)
         {
             try

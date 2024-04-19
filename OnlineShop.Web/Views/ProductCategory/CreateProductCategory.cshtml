@@ -1,0 +1,24 @@
+﻿@model ProductCategoryDto
+<form asp-action="CreateProductCategory">
+    <br/>
+    <h1 class="text-white text-center">Создание новой группы товара</h1>
+    <hr/>
+    <div class="row">
+        <div class="col-2">
+            <label class="control-lable pt-2" style="font-size:20px;">Название</label>
+        </div>
+        <div class="col-10 pb-3">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger" />
+        </div>
+        <div class="col-5 offset-2">
+            <a asp-action="ProductCategoryIndex" class="btn-primary btn form-control">Назад</a>
+        </div>
+        <div class="col-5">
+            <input type="submit" value="Сохранить" class="btn btn-success form-control"/>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}
