@@ -1,32 +1,39 @@
-﻿@model DiscountDto
-<form asp-action="CreateDiscount">
+﻿@model ProductDto
+<form asp-action="CreateProduct">
     <br/>
     <h1 class="text-white text-center">Создание нового товара</h1>
     <hr/>
     <div class="row">
         <div class="col-2">
-            <label class="control-lable pt-2"style="font-size:20px;">Код скидки</label>
+            <label class="control-lable pt-2"style="font-size:20px;">Название</label>
         </div>
         <div class="col-10 pb-3">
-            <input asp-for="DiscountCode" class="form-control"/>
-            <span asp-validation-for="DiscountCode" class="text-danger"/>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger" />
         </div>
         <div class="col-2">
-            <label class="control-lable pt-2" style="font-size:20px;">Сумма скидки</label>
+            <label class="control-lable pt-2" style="font-size:20px;">Цена</label>
         </div>
         <div class="col-10 pb-3">
-            <input asp-for="DiscountAmount" class="form-control" />
-            <span asp-validation-for="DiscountAmount" class="text-danger" />
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger" />
         </div>
         <div class="col-2">
-            <label class="control-lable pt-2" style="font-size:20px;">Минимальная сумма заказа</label>
+            <label class="control-lable pt-2" style="font-size:20px;">Описание</label>
         </div>
         <div class="col-10 pb-3">
-            <input asp-for="MinAmount" class="form-control" />
-            <span asp-validation-for="MinAmount" class="text-danger" />
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger" />
         </div>
+        <div class="col-2">
+            <label class="control-lable pt-2" style="font-size:20px;">Категория</label>
+        </div>
+        <div class="col-10 pb-3">
+            <input asp-for="ProductCategoryName" class="form-control" />
+            <span asp-validation-for="ProductCategoryName" class="text-danger" />
+        </div>       
         <div class="col-5 offset-2">
-            <a asp-action="DiscountIndex" class="btn-primary btn form-control">Назад</a>
+            <a asp-action="ProductIndex" class="btn-primary btn form-control">Назад</a>
         </div>
         <div class="col-5">
             <input type="submit" value="Сохранить" class="btn btn-success form-control"/>
