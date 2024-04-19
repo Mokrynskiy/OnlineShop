@@ -7,88 +7,87 @@ using OnlineShop.Web.Service.IService;
 using System.Diagnostics;
 
 
-namespace OnlineShop.Web.Controllers
+namespace OnlineShop.Web.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly ILogger<HomeController> _logger;
+    private readonly IShoppingCartService _shoppingCartService;
+    private readonly IProductService _productService;
+
+    public HomeController(ILogger<HomeController> logger, IShoppingCartService shoppingCartService, IProductService productService)
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IShoppingCartService _shoppingCartService;
-        private readonly IProductService _productService;
+        _logger = logger;
+        _shoppingCartService = shoppingCartService;
+        _productService = productService;
+    }
 
-        public HomeController(ILogger<HomeController> logger, IShoppingCartService shoppingCartService, IProductService productService)
+    public async Task<IActionResult> Index()
+    {
+        List<ProductDto> list = new();
+        var response = await _productService.GetAllProductsAsync();
+        if (response != null && response.IsSuccess)
         {
-            _logger = logger;
-            _shoppingCartService = shoppingCartService;
-            _productService = productService;
+            list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
         }
+        return View(list);
+    }
 
-        public async Task<IActionResult> Index()
+    public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+    [Authorize]
+    [HttpPost]
+    [ActionName("ProductionDetails")]
+    public async Task<IActionResult> ProductDetails(ProductDto productDto)
+    {
+        var cart = new CartDTO()
         {
-            List<ProductDto> list = new();
-            var response = await _productService.GetAllProductsAsync();
-            if (response != null && response.IsSuccess)
+            CartHeaderDTO = new CartHeaderDTO
             {
-                list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+                UserId = User.Claims.Where(x => x.Type == JwtClaimTypes.Subject)?.FirstOrDefault()?.Value
             }
-            return View(list);
-        }
+        };
 
-        public IActionResult Privacy()
+        var cartDetails = new CartDetailsDTO()
         {
-            return View();
-        }
+            Count = productDto.Count,
+            ProductId = productDto.Id
+        };
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        var cartDetailsDTOs = new List<CartDetailsDTO>() { cartDetails };
+        cart.CartDetails = cartDetailsDTOs;
+
+        var response = await _shoppingCartService.CartAddAsync(cart);
+
+        if(response != null && response.IsSuccess)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            TempData["success"] = "Товар успешно добавлен в корзину!";
+            return RedirectToAction(nameof(Index));
         }
-        [Authorize]
-        [HttpPost]
-        [ActionName("ProductionDetails")]
-        public async Task<IActionResult> ProductDetails(ProductDto productDto)
+        else
         {
-            var cart = new CartDTO()
-            {
-                CartHeaderDTO = new CartHeaderDTO
-                {
-                    UserId = User.Claims.Where(x => x.Type == JwtClaimTypes.Subject)?.FirstOrDefault()?.Value
-                }
-            };
-
-            var cartDetails = new CartDetailsDTO()
-            {
-                Count = productDto.Count,
-                ProductId = productDto.Id
-            };
-
-            var cartDetailsDTOs = new List<CartDetailsDTO>() { cartDetails };
-            cart.CartDetails = cartDetailsDTOs;
-
-            var response = await _shoppingCartService.CartAddAsync(cart);
-
-            if(response != null && response.IsSuccess)
-            {
-                TempData["success"] = "Товар успешно добавлен в корзину!";
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                TempData["error"] = response?.Message;
-            }
-
-            return View(productDto);
+            TempData["error"] = response?.Message;
         }
 
-        public async Task<IActionResult> Details(int productId)
+        return View(productDto);
+    }
+
+    public async Task<IActionResult> Details(int productId)
+    {
+        ProductDto model = new();
+        var response = await _productService.GetProductByIdAsync(productId);
+        if (response != null && response.IsSuccess)
         {
-            ProductDto model = new();
-            var response = await _productService.GetProductByIdAsync(productId);
-            if (response != null && response.IsSuccess)
-            {
-                model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
-            }
-            return View(model);
+            model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
         }
+        return View(model);
     }
 }

@@ -1,9 +1,9 @@
 ﻿﻿@{
     ViewData["Title"] = "Товар: " + @Model.Name;
 }
-@model OnlineShop.Web.Models.ProductDto
+@model ProductDto
 
-<form method="post">
+<form method="post" asp-action="ProductionDetails">
     <input asp-for="Id" hidden />
     <div class=" pt-4">
         <div class="card container" style="border:1px solid #808080;">
