@@ -173,9 +173,13 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         {
             try
             {
+                var cartHeadersFind = _db.CartHeaders.FirstOrDefault(x => x.UserId == userId);
+
+                var cartHeaderDTO = _mapper.Map<CartHeaderDTO>(cartHeadersFind);
+
                 var cart = new CartDTO()
                 {
-                    CartHeaderDTO = _mapper.Map<CartHeaderDTO>(_db.CartHeaders.First(x => x.UserId == userId))
+                    CartHeaderDTO = cartHeaderDTO
                 };
 
                 cart.CartDetails = _mapper.Map<IEnumerable<CartDetailsDTO>>(_db.CartDetails.Where(x => x.CartHeaderId == cart.CartHeaderDTO.CartHeaderId));

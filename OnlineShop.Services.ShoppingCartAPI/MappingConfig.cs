@@ -10,9 +10,9 @@ namespace OnlineShop.Services.ShoppingCartAPI
         {
             var mappingConfig = new MapperConfiguration(config => 
             {
-                //config.CreateMap<CartDetailsDTO, CartDetails>();
+                config.CreateMap<CartDetailsDTO, CartDetails>();
                 config.CreateMap<CartDetails, CartDetailsDTO>();
-                //config.CreateMap<CartHeaderDTO, CartHeader>();
+                config.CreateMap<CartHeaderDTO, CartHeader>();
                 config.CreateMap<CartHeader, CartHeaderDTO>();
 
             });

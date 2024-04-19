@@ -67,8 +67,8 @@ namespace OnlineShop.Web.Controllers
                 return cart;
             }
 
-            return new CartDTO();
-            /*
+            //return new CartDTO();
+            
             var cartHeaderDTO = new CartHeaderDTO() {
                 CartHeaderId = 10,
                 UserId = userId,
@@ -84,7 +84,7 @@ namespace OnlineShop.Web.Controllers
                 CartHeaderDTO = cartHeaderDTO,
                 CartDetails = cartDetailsList
             };
-            */
+            
         }
     }
 }

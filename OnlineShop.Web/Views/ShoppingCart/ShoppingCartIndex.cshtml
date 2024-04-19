@@ -2,7 +2,7 @@
 @model CartDTO
 ﻿
 
-@if (Model != null && Model.CartDetails != null && Model.CartDetails?.Count() > 0)
+@if (Model != null && Model.CartDetails != null /*&& Model.CartDetails?.Count() > 0*/)
 {
  
     <form method="post">
@@ -16,7 +16,7 @@
                 <div class="card-header bg-dark text-light ml-0 row ">
                     <div class="col-6">
                         <i class="fa fa-shopping-cart"></i> &nbsp;
-                        Shopping Cart
+                        Заказ:
                     </div>
                     <div class="col-6 text-end">
                         <a asp-action="Index" asp-controller="Home" class="btn btn-outline-warning btn-sm">Вернуться к покупкам</a>
@@ -28,13 +28,13 @@
                             <div class="col-lg-2">
                             </div>
                             <div class="col-lg-5">
-                                Product Details
+                                Товар
                             </div>
                             <div class="col-lg-2">
-                                Price
+                                Цена
                             </div>
                             <div class="col-lg-2">
-                                Count
+                                Количество
                             </div>
                             <div class="col-lg-1">
                             </div>
@@ -76,7 +76,7 @@
                                 }
                                 else
                                 {
-                                    <span>Coupon:</span>
+                                    <span>Купон:</span>
                                     
                                     <input asp-for="CartHeaderDTO.DiscountCard" disabled />
                                     
@@ -99,7 +99,7 @@
                     </div>
                     <div class="col-6 col-md-3">
                         <a asp-action="Checkout" class="btn btn-success form-control ">
-                            <span>Checkout</span>
+                            <span>Заказать</span>
                         </a>
                     </div>
                 </div>

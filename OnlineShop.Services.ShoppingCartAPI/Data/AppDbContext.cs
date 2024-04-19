@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Services.ShoppingCartAPI.Models;
-using System.ComponentModel.DataAnnotations;
+
 
 namespace OnlineShop.Services.ShoppingCartAPI.Data
 {
