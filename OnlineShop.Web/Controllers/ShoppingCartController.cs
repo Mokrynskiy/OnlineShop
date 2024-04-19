@@ -68,6 +68,23 @@ namespace OnlineShop.Web.Controllers
             }
 
             return new CartDTO();
+            /*
+            var cartHeaderDTO = new CartHeaderDTO() {
+                CartHeaderId = 10,
+                UserId = userId,
+                DiscountCard = "DiscountCard10",
+                Discount = 10,
+                CartTotal = 1000
+            };
+            var cartDetailsList = new List<CartDetailsDTO>();
+
+            
+
+            return new CartDTO() {
+                CartHeaderDTO = cartHeaderDTO,
+                CartDetails = cartDetailsList
+            };
+            */
         }
     }
 }
