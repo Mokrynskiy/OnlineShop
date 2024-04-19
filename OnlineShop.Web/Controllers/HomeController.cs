@@ -1,7 +1,9 @@
 using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OnlineShop.Web.Models;
+using OnlineShop.Web.Service;
 using OnlineShop.Web.Service.IService;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,16 +14,24 @@ namespace OnlineShop.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IShoppingCartService _shoppingCartService;
+        private readonly IProductService _productService;
 
-        public HomeController(ILogger<HomeController> logger, IShoppingCartService shoppingCartService)
+        public HomeController(ILogger<HomeController> logger, IShoppingCartService shoppingCartService, IProductService productService)
         {
             _logger = logger;
             _shoppingCartService = shoppingCartService;
+            _productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<ProductDto> list = new();
+            var response = await _productService.GetAllProductsAsync();
+            if (response != null && response.IsSuccess)
+            {
+                list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+            }
+            return View(list);
         }
 
         public IActionResult Privacy()
@@ -70,5 +80,20 @@ namespace OnlineShop.Web.Controllers
 
             return View(productDto);
         }
+
+        /*
+        [Authorize]
+        public async Task<IActionResult> Details(int productId)
+        {
+            ProductDto model = new();
+            //var response = await _productService.GetProductByIdAsync<ResponseDto>(productId, "");
+            var response = await _productService.GetAllProductsAsync();
+            if (response != null && response.IsSuccess)
+            {
+                model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+            }
+            return View(model);
+        }
+        */
     }
 }
