@@ -1,4 +1,5 @@
 ﻿namespace OnlineShop.Web.Models
+{ 
     public class CartDTO
     {
         public CartHeaderDTO CartHeaderDTO { get; set; }
