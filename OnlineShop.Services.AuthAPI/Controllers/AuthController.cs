@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Services.AuthAPI.Models.Dto;
 using OnlineShop.Services.AuthAPI.Service.IService;
+using System.Threading.Tasks;
 
 namespace OnlineShop.Services.AuthAPI.Controllers
 {

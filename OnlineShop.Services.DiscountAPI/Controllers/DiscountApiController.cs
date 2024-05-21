@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Services.DiscountAPI.Data;
 using OnlineShop.Services.DiscountAPI.Models;
 using OnlineShop.Services.DiscountAPI.Models.Dto;
@@ -23,11 +24,11 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
             _response = new ResponseDto();
         }
         [HttpGet]
-        public ResponseDto Get()
+        public async Task<ResponseDto> Get()
         {
             try
             {
-                IEnumerable<Discount> result = _db.Discounts.ToList();
+                IEnumerable<Discount> result = await _db.Discounts.ToListAsync();
                 _response.Result = _mapper.Map<IEnumerable<DiscountDto>>(result);
             }
             catch (Exception ex)
@@ -40,11 +41,11 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public ResponseDto Get(int id)
+        public async Task<ResponseDto> Get(int id)
         {
             try
             {
-                Discount result = _db.Discounts.First(x => x.Id == id);
+                Discount result = await _db.Discounts.FirstAsync(x => x.Id == id);
                 _response.Result = _mapper.Map<DiscountDto>(result);
             }
             catch (Exception ex)
@@ -56,11 +57,11 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
         }
         [HttpGet]
         [Route("GetByCode/{code}")]
-        public ResponseDto GetByCode(string code)
+        public async Task<ResponseDto> GetByCode(string code)
         {
             try
             {
-                Discount result = _db.Discounts.First(x => x.DiscountCode.ToLower() == code.ToLower());
+                Discount result = await _db.Discounts.FirstAsync(x => x.DiscountCode.ToLower() == code.ToLower());
                 _response.Result = _mapper.Map<DiscountDto>(result);
             }
             catch (Exception ex)
@@ -73,13 +74,13 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]
-        public ResponseDto Post([FromBody] DiscountDto discountDto)
+        public async Task<ResponseDto> Post([FromBody] DiscountDto discountDto)
         {
             try
             {
                 Discount obj = _mapper.Map<Discount>(discountDto);
                 _db.Discounts.Add(obj);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 _response.Result = _mapper.Map<DiscountDto>(obj);
             }
             catch (Exception ex)
@@ -91,13 +92,13 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
         }
         [HttpPut]
         [Authorize(Roles = "ADMIN")]
-        public ResponseDto Put([FromBody] DiscountDto discountDto)
+        public async Task<ResponseDto> Put([FromBody] DiscountDto discountDto)
         {
             try
             {
                 Discount obj = _mapper.Map<Discount>(discountDto);
                 _db.Discounts.Update(obj);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 _response.Result = _mapper.Map<DiscountDto>(obj);
             }
             catch (Exception ex)
@@ -110,13 +111,13 @@ namespace OnlineShop.Services.DiscountAPI.Controllers
         [HttpDelete]
         [Route("{id:int}")]
         [Authorize(Roles = "ADMIN")]
-        public ResponseDto Delete(int id)
+        public async Task<ResponseDto> Delete(int id)
         {
             try
             {
                 Discount obj = _db.Discounts.First(x => x.Id == id);
                 _db.Discounts.Remove(obj);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
             catch (Exception ex)
             {

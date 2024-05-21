@@ -33,7 +33,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         /// <param name="cartDTO"></param>
         /// <returns></returns>
         [HttpPost("CartAdd")]
-        public async Task<ResponseDTO> CartAdd(CartDTO cartDTO) 
+        public async Task<ResponseDTO?> CartAdd(CartDTO cartDTO) 
         {
             try
             {
@@ -140,7 +140,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         /// <param name="cartDetailsId"></param>
         /// <returns></returns>
         [HttpPost("RemoveCart")]
-        public async Task<ResponseDTO> RemoveCart(int cartDetailsId)
+        public async Task<ResponseDTO?> RemoveCart(int cartDetailsId)
         {
             try
             {
@@ -169,7 +169,7 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         }
 
         [HttpGet("GetCart")]
-        public async Task<ResponseDTO> GetCart(string userId)
+        public async Task<ResponseDTO?> GetCart(string userId)
         {
             try
             {

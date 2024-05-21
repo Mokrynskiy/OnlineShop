@@ -31,18 +31,18 @@ namespace OnlineShop.Services.OrderAPI.Controllers
 
         [Authorize]
         [HttpGet("GetOrders")]
-        public ResponseDto? Get(string? userId = "") 
+        public async Task<ResponseDto?> Get(string? userId = "") 
         {
             try
             {
                 IEnumerable<OrderHeader> objList;
                 if(User.IsInRole(SD.RoleAdmin))
                 {
-                    objList = _db.OrderHeaders.Include(x => x.OrderDetails).OrderByDescending(x=>x.OrderHeaderId).ToList();
+                    objList = await _db.OrderHeaders.Include(x => x.OrderDetails).OrderByDescending(x=>x.OrderHeaderId).ToListAsync();
                 }
                 else
                 {
-                    objList = _db.OrderHeaders.Include(x => x.OrderDetails).Where(x => x.UserId == userId).OrderByDescending(x => x.OrderHeaderId).ToList();
+                    objList = await _db.OrderHeaders.Include(x => x.OrderDetails).Where(x => x.UserId == userId).OrderByDescending(x => x.OrderHeaderId).ToListAsync();
                 }
 
                 _response.Result  = _mapper.Map<IEnumerable<OrderHeaderDTO>>(objList);
@@ -58,11 +58,11 @@ namespace OnlineShop.Services.OrderAPI.Controllers
 
         [Authorize]
         [HttpGet("GetOrder/{id:int}")]
-        public ResponseDto? Get(int id)
+        public async Task<ResponseDto?> Get(int id)
         {
             try
             {
-                OrderHeader orderHeader = _db.OrderHeaders.Include(u=>u.OrderDetails).First(u=>u.OrderHeaderId == id);
+                OrderHeader orderHeader = await _db.OrderHeaders.Include(u=>u.OrderDetails).FirstAsync(u=>u.OrderHeaderId == id);
                 _response.Result = _mapper.Map<OrderHeaderDTO>(orderHeader);
             }
             catch (Exception ex)
@@ -76,7 +76,7 @@ namespace OnlineShop.Services.OrderAPI.Controllers
 
         [Authorize]
         [HttpPost("CreateOrder")]
-        public async Task<ResponseDto> CreateOrder([FromBody] CartDTO cartDTO)
+        public async Task<ResponseDto?> CreateOrder([FromBody] CartDTO cartDTO)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace OnlineShop.Services.OrderAPI.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                //_response.Message = ex.Message;
+                _response.Message = ex.Message;
             }
 
             return _response;
