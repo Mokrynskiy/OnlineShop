@@ -50,23 +50,8 @@ namespace OnlineShop.Web.Service
                     default:
                         message.Method = HttpMethod.Get;
                         break;
-                }
-                apiResponse = await client.SendAsync(message);
-                switch (apiResponse.StatusCode)
-                {
-                    case HttpStatusCode.NotFound:
-                        return new() { IsSuccess = false, Message = "Not Found" };
-                    case HttpStatusCode.Forbidden:
-                        return new() { IsSuccess = false, Message = "Access Denided" };
-                    case HttpStatusCode.Unauthorized:
-                        return new() { IsSuccess = false, Message = "Unauthorized" };
-                    case HttpStatusCode.InternalServerError:
-                        return new() { IsSuccess = false, Message = "Internal Server Error" };
-                    default:
-                        var apiContent = await apiResponse.Content.ReadAsStringAsync();
-                        var apiResponseDto = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
-                        return apiResponseDto;
-                }
+                }                
+                return await GetResponceData(await client.SendAsync(message));                
             }
             catch (Exception ex)
             {
@@ -78,5 +63,25 @@ namespace OnlineShop.Web.Service
             }
             
         }
+
+        private async Task<ResponseDto?> GetResponceData(HttpResponseMessage responceMessage)
+        {
+            switch (responceMessage.StatusCode)
+            {
+                case HttpStatusCode.NotFound:
+                    return new() { IsSuccess = false, Message = "Not Found" };
+                case HttpStatusCode.Forbidden:
+                    return new() { IsSuccess = false, Message = "Access Denided" };
+                case HttpStatusCode.Unauthorized:
+                    return new() { IsSuccess = false, Message = "Unauthorized" };
+                case HttpStatusCode.InternalServerError:
+                    return new() { IsSuccess = false, Message = "Internal Server Error" };
+                default:
+                    var apiContent = await responceMessage.Content.ReadAsStringAsync();
+                    var apiResponseDto = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
+                    return apiResponseDto;
+            }
+        }
+
     }
 }
