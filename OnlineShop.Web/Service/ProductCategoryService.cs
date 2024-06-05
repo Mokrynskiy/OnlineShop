@@ -14,9 +14,9 @@ namespace OnlineShop.Web.Service
         }
 
         
-        public async Task<ResponseDto?> CreateProductCategoryAsync(ProductCategoryDto ProductCategoryDto)
+        public async Task<ResponseDto<ProductDto>?> CreateProductCategoryAsync(ProductCategoryDto ProductCategoryDto)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<ProductDto>>(new RequestDto()
             {
                 ApiType = ApiType.POST,
                 Data = ProductCategoryDto,
@@ -24,45 +24,45 @@ namespace OnlineShop.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> DeleteProductCategoryAsync(int id)
+        public async Task<ResponseDto<int>?> DeleteProductCategoryAsync(int id)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<int>>(new RequestDto()
             {
                 ApiType = ApiType.DELETE,
                 Url = SD.ProductCategoryAPIBase + "/api/productCategory/" + id
             });
         }
 
-        public async Task<ResponseDto?> GetAllProductCategorysAsync()
+        public async Task<ResponseDto<IEnumerable<ProductDto>>?> GetAllProductCategorysAsync()
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<IEnumerable<ProductDto>>>(new RequestDto()
             {
                 ApiType = ApiType.GET,
                 Url = SD.ProductCategoryAPIBase + "/api/productCategory"
             });
         }
 
-        public async Task<ResponseDto?> GetProductCategoryAsync(string name)
+        public async Task<ResponseDto<ProductDto>?> GetProductCategoryAsync(string name)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<ProductDto>>(new RequestDto()
             {
                 ApiType = ApiType.GET,
                 Url = SD.ProductCategoryAPIBase + "/api/productCategory/GetByName/"+ name
             });
         }
 
-        public async Task<ResponseDto?> GetProductCategoryByIdAsync(int id)
+        public async Task<ResponseDto<ProductDto>?> GetProductCategoryByIdAsync(int id)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<ProductDto>>(new RequestDto()
             {
                 ApiType = ApiType.GET,
                 Url = SD.ProductCategoryAPIBase + "/api/productCategory/"+ id
             });
         }
 
-        public async Task<ResponseDto?> UpdateProductCategoryAsync(ProductCategoryDto ProductCategoryDto)
+        public async Task<ResponseDto<ProductDto>?> UpdateProductCategoryAsync(ProductCategoryDto ProductCategoryDto)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<ProductDto>>(new RequestDto()
             {
                 ApiType = ApiType.PUT,
                 Data = ProductCategoryDto,

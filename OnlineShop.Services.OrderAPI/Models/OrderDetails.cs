@@ -13,7 +13,7 @@ namespace OnlineShop.Services.OrderAPI.Models
         public OrderHeader? OrderHeader { get; set; }
         public int ProductId { get; set; }
         [NotMapped]
-        public ProductDTO? Product { get; set; }
+        public ProductDto? Product { get; set; }
         public int Count { get; set; }
         public string ProductName{ get; set; }
         public double Price { get; set; }

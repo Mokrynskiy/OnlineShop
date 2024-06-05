@@ -43,7 +43,7 @@ namespace OnlineShop.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ApplyDiscountCard(CartDTO cartDTO)
+        public async Task<IActionResult> ApplyDiscountCard(CartDto cartDTO)
         {
             var response = await _shoppingCartService.ApplyDiscountCardAsync(cartDTO);
 
@@ -56,14 +56,14 @@ namespace OnlineShop.Web.Controllers
             return View();
         }
 
-        private async Task<CartDTO> LoadCartBaseOnLoggedInUser()
+        private async Task<CartDto> LoadCartBaseOnLoggedInUser()
         {
             var userId = User.Claims.Where(x => x.Type == JwtRegisteredClaimNames.Sub).FirstOrDefault()?.Value;
             var response = await _shoppingCartService.GetCartByUserIdAsync(userId);
 
             if(response != null && response.IsSuccess)
             {
-                var cart = JsonConvert.DeserializeObject<CartDTO>(Convert.ToString(response.Result));
+                var cart = JsonConvert.DeserializeObject<CartDto>(Convert.ToString(response.Result));
                 return cart;
             }
 
@@ -80,7 +80,7 @@ namespace OnlineShop.Web.Controllers
 
             
 
-            return new CartDTO() {
+            return new CartDto() {
                 CartHeaderDTO = cartHeaderDTO,
                 CartDetails = cartDetailsList
             };

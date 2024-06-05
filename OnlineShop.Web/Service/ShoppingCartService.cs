@@ -1,7 +1,7 @@
 ﻿using OnlineShop.Web.Models;
 using OnlineShop.Web.Service.IService;
 using OnlineShop.Web.Utility;
-using static OnlineShop.Web.Utility.SD;
+
 
 namespace OnlineShop.Web.Service
 {
@@ -14,9 +14,9 @@ namespace OnlineShop.Web.Service
             _baseService = baseService;
         }
 
-        public async Task<ResponseDto?> ApplyDiscountCardAsync(CartDTO cartDTO)
+        public async Task<ResponseDto<bool>?> ApplyDiscountCardAsync(CartDto cartDTO)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<bool>>(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = cartDTO,
@@ -24,9 +24,9 @@ namespace OnlineShop.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> CartAddAsync(CartDTO cartDTO)
+        public async Task<ResponseDto<CartDto>?> CartAddAsync(CartDto cartDTO)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<CartDto>>(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = cartDTO,
@@ -34,18 +34,18 @@ namespace OnlineShop.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> GetCartByUserIdAsync(string userId)
+        public async Task<ResponseDto<CartDto>?> GetCartByUserIdAsync(string userId)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<CartDto>>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
                 Url = SD.ShoppingCartAPIBase + "/api/cart/GetCart/" + userId
             });
         }
 
-        public async Task<ResponseDto?> RemoveCartAsync(int cartDetailsId)
+        public async Task<ResponseDto<bool>?> RemoveCartAsync(int cartDetailsId)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<bool>>(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = cartDetailsId,
@@ -53,9 +53,9 @@ namespace OnlineShop.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> RemoveDiscountCard(CartDTO cartDTO)
+        public async Task<ResponseDto<bool>?> RemoveDiscountCard(CartDto cartDTO)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<bool>>(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = cartDTO,

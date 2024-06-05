@@ -15,17 +15,16 @@ namespace OnlineShop.Services.ProductAPI.Controllers
     {
         private readonly AppDbContext _db;
         private IMapper _mapper;
-        private ResponseDto _response;
         
         public ProductApiController(AppDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
-            _response = new ResponseDto();
         }
         [HttpGet]
-        public async Task<ResponseDto> Get()
+        public async Task<ResponseDto<IEnumerable<ProductDto>>> Get()
         {
+            var _response = new ResponseDto<IEnumerable<ProductDto>> ();
             try
             {
                 IEnumerable<Product> result = await _db.Products.ToListAsync();
@@ -41,8 +40,9 @@ namespace OnlineShop.Services.ProductAPI.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<ResponseDto> Get(int id)
+        public async Task<ResponseDto<ProductDto>> Get(int id)
         {
+            var _response = new ResponseDto<ProductDto>();
             try
             {
                 Product result = await _db.Products.FirstAsync(x => x.Id == id);
@@ -57,8 +57,9 @@ namespace OnlineShop.Services.ProductAPI.Controllers
         }
         [HttpGet]
         [Route("GetByName/{name}")]
-        public async Task<ResponseDto> GetByCode(string name)
+        public async Task<ResponseDto<ProductDto>> GetByCode(string name)
         {
+            var _response = new ResponseDto<ProductDto>();
             try
             {
                 Product result = await _db.Products.FirstAsync(x => x.Name.ToLower().Contains(name.ToLower()));
@@ -74,11 +75,12 @@ namespace OnlineShop.Services.ProductAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]
-        public async Task<ResponseDto> Post([FromBody] ProductDto ProductDto)
+        public async Task<ResponseDto<ProductDto>> Post([FromBody] ProductDto ProductDto)
         {
+            var _response = new ResponseDto<ProductDto>();
             try
             {
-                Product obj = _mapper.Map<Product>(ProductDto);
+                var obj = _mapper.Map<Product>(ProductDto);
                 _db.Products.Add(obj);
                 await _db.SaveChangesAsync();
                 _response.Result = _mapper.Map<ProductDto>(obj);
@@ -92,8 +94,9 @@ namespace OnlineShop.Services.ProductAPI.Controllers
         }
         [HttpPut]
         [Authorize(Roles = "ADMIN")]
-        public async Task<ResponseDto> Put([FromBody] ProductDto ProductDto)
+        public async Task<ResponseDto<ProductDto>> Put([FromBody] ProductDto ProductDto)
         {
+            var _response = new ResponseDto<ProductDto>();
             try
             {
                 Product obj = _mapper.Map<Product>(ProductDto);
@@ -111,11 +114,13 @@ namespace OnlineShop.Services.ProductAPI.Controllers
         [HttpDelete]
         [Route("{id:int}")]
         [Authorize(Roles = "ADMIN")]
-        public async Task<ResponseDto> Delete(int id)
+        public async Task<ResponseDto<int>> Delete(int id)
         {
+            var _response = new ResponseDto<int>();
+            _response.Result = id;
             try
             {
-                Product obj = _db.Products.First(x => x.Id == id);
+                var obj = _db.Products.First(x => x.Id == id);
                 _db.Products.Remove(obj);
                 await _db.SaveChangesAsync();
             }

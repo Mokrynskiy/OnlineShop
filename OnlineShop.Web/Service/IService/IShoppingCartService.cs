@@ -4,10 +4,10 @@ namespace OnlineShop.Web.Service.IService
 {
     public interface IShoppingCartService
     {
-        Task<ResponseDto?> GetCartByUserIdAsync(string userId);
-        Task<ResponseDto?> CartAddAsync(CartDTO cartDTO);
-        Task<ResponseDto?> RemoveCartAsync(int cartDetailsId);
-        Task<ResponseDto?> ApplyDiscountCardAsync(CartDTO cartDTO);
-        Task<ResponseDto?> RemoveDiscountCard(CartDTO cartDTO);
+        Task<ResponseDto<CartDto>?> GetCartByUserIdAsync(string userId);
+        Task<ResponseDto<CartDto>?> CartAddAsync(CartDto cartDTO);
+        Task<ResponseDto<bool>?> RemoveCartAsync(int cartDetailsId);
+        Task<ResponseDto<bool>?> ApplyDiscountCardAsync(CartDto cartDTO);
+        Task<ResponseDto<bool>?> RemoveDiscountCard(CartDto cartDTO);
     }
 }

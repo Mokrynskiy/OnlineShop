@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Web.Models;
 using OnlineShop.Web.Service.IService;
-using System.Reflection;
 
 namespace OnlineShop.Web.Controllers
 {
@@ -16,17 +13,18 @@ namespace OnlineShop.Web.Controllers
         }
         public async Task<IActionResult> ProductIndex()
         {
-            List<ProductDto>? ProductList = new();
-            ResponseDto? response = await _productService.GetAllProductsAsync();
+            IEnumerable<ProductDto>? productList = null;
+            var response = await _productService.GetAllProductsAsync();
             if (response != null && response.IsSuccess)
             {
-                ProductList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+                productList = response.Result;
+                //ProductList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
             }
             else
             {
                 TempData["error"] = response?.Message;
             }
-            return View(ProductList);
+            return View(productList ?? new List<ProductDto>());
         }
         public async Task<IActionResult> CreateProduct()
         {
@@ -37,7 +35,7 @@ namespace OnlineShop.Web.Controllers
         {
             if(ModelState.IsValid)
             {
-                ResponseDto? response = await _productService.CreateProductAsync(model);
+                var response = await _productService.CreateProductAsync(model);
                 if (response != null && response.IsSuccess)
                 {
                     TempData["success"] = "Товар успешно добавлен!";
@@ -56,7 +54,8 @@ namespace OnlineShop.Web.Controllers
             var response = await _productService.GetProductByIdAsync(productId);
             if (response != null && response.IsSuccess)
             {
-                ProductDto model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+                var model = response.Result;
+                //ProductDto model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
                 return View(model);
             }
             return NotFound();
@@ -82,10 +81,11 @@ namespace OnlineShop.Web.Controllers
 
         public async Task<IActionResult> DeleteProduct(int productId)
         {
-            ResponseDto? response = await _productService.GetProductByIdAsync(productId);
+            var response = await _productService.GetProductByIdAsync(productId);
             if (response != null && response.IsSuccess)
             {
-                ProductDto? model = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+                ProductDto? model = response.Result;
+                //ProductDto? model = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
                 if (model != null)
                 {
                     return View(model);
@@ -96,10 +96,11 @@ namespace OnlineShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteProduct(ProductDto model)
         {
-            ResponseDto? response = await _productService.DeleteProductAsync(model.Id);
+            var response = await _productService.DeleteProductAsync(model.Id);
             if (response != null && response.IsSuccess)
             {
-                ProductDto? responce = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+                //var responce = response.Result;
+                //ProductDto? responce = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
                 if (model != null)
                 {
                     TempData["success"] = "Товар успешно удален!";

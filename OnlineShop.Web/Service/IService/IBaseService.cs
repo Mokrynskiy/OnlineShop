@@ -4,6 +4,6 @@ namespace OnlineShop.Web.Service.IService
 {
     public interface IBaseService
     {
-        Task<ResponseDto?> SendAsync(RequestDto requestDto, bool withBearer = true);
+        Task<TResult?> SendAsync<TResult>(RequestDto requestDto, bool withBearer = true) where TResult : IResponseDto, new();
     }
 }

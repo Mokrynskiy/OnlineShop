@@ -1,8 +1,6 @@
-﻿using OnlineShop.Services.OrderAPI.Models.DTO;
-
-namespace OnlineShop.Services.OrderAPI.Models.Dto
+﻿namespace OnlineShop.Services.OrderAPI.Models.Dto
 {
-    public class OrderHeaderDTO
+    public class OrderHeaderDto
     {
         public int OrderHeaderId { get; set; }
         public string? UserId { get; set; }
@@ -13,6 +11,6 @@ namespace OnlineShop.Services.OrderAPI.Models.Dto
         public DateTime OrderTime { get; set; }
         public string? Status { get; set; }
 
-        public IEnumerable<OrderDetailsDTO> OrderDetails { get; set; }
+        public IEnumerable<OrderDetailsDto> OrderDetails { get; set; }
     }
 }

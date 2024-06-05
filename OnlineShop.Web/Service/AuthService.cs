@@ -12,9 +12,9 @@ namespace OnlineShop.Web.Service
         {
             _baseService = baseService;
         }
-        public async Task<ResponseDto?> AssignRoleAsync(RegistrationRequestDto registrationRequestDto)
+        public async Task<ResponseDto<bool>?> AssignRoleAsync(RegistrationRequestDto registrationRequestDto)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<bool>>(new RequestDto()
             {
                 ApiType = ApiType.POST,
                 Data = registrationRequestDto,
@@ -22,9 +22,9 @@ namespace OnlineShop.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> LoginAsync(LoginRequestDto loginRequestDto)
+        public async Task<ResponseDto<LoginResponseDto>?> LoginAsync(LoginRequestDto loginRequestDto)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<LoginResponseDto>>(new RequestDto()
             {
                 ApiType = ApiType.POST,
                 Data = loginRequestDto,
@@ -32,9 +32,9 @@ namespace OnlineShop.Web.Service
             }, withBearer: false);
         }
 
-        public async Task<ResponseDto?> RegisterAsync(RegistrationRequestDto registrationRequestDto)
+        public async Task<ResponseDto<string>?> RegisterAsync(RegistrationRequestDto registrationRequestDto)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<string>>(new RequestDto()
             {
                 ApiType = ApiType.POST,
                 Data = registrationRequestDto,

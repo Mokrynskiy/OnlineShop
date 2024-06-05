@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Services.AuthAPI.Models.Dto;
 using OnlineShop.Services.AuthAPI.Service.IService;
-using System.Threading.Tasks;
 
 namespace OnlineShop.Services.AuthAPI.Controllers
 {
@@ -10,16 +9,15 @@ namespace OnlineShop.Services.AuthAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        protected ResponseDto _response;
         public AuthController(IAuthService authService)
         {
             _authService = authService;
-            _response = new();
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegistrationRequestDto model)
         {
+            var _response = new ResponseDto<string>();
             var errorMessage = await _authService.Register(model);
             if(!string.IsNullOrEmpty(errorMessage))
             {
@@ -33,6 +31,7 @@ namespace OnlineShop.Services.AuthAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
         {
+            var _response = new ResponseDto<LoginResponseDto>();
             var loginResponse = await _authService.Login(model);
             if (loginResponse.User == null)
             {
@@ -47,7 +46,8 @@ namespace OnlineShop.Services.AuthAPI.Controllers
         [HttpPost("AssignRole")]
         public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDto model)
         {
-            var assignRoleSuccessful = await _authService.AssignRole(model.Email, model.Role.ToUpper());
+            var _response = new ResponseDto<bool>();
+            var assignRoleSuccessful = await _authService.AssignRole(model.Email, model?.Role?.ToUpper() ?? "");
             if (!assignRoleSuccessful)
             {
                 _response.IsSuccess = false;

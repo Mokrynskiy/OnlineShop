@@ -12,9 +12,9 @@ namespace OnlineShop.Web.Service
         {
             _baseService = baseService;    
         }
-        public async Task<ResponseDto?> CreateDiscountAsync(DiscountDto discountDto)
+        public async Task<ResponseDto<DiscountDto>?> CreateDiscountAsync(DiscountDto discountDto)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<DiscountDto>>(new RequestDto()
             {
                 ApiType = ApiType.POST,
                 Data = discountDto,
@@ -22,45 +22,45 @@ namespace OnlineShop.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> DeleteDiscountAsync(int id)
+        public async Task<ResponseDto<int>?> DeleteDiscountAsync(int id)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<int>>(new RequestDto()
             {
                 ApiType = ApiType.DELETE,
                 Url = SD.DiscountAPIBase + "/api/discount/" + id
             });
         }
 
-        public async Task<ResponseDto?> GetAllDiscountsAsync()
+        public async Task<ResponseDto<List<DiscountDto>>?> GetAllDiscountsAsync()
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<List<DiscountDto>>>(new RequestDto()
             {
                 ApiType = ApiType.GET,
                 Url = SD.DiscountAPIBase + "/api/discount"
             });
         }
 
-        public async Task<ResponseDto?> GetDiscountAsync(string discountCode)
+        public async Task<ResponseDto<DiscountDto>?> GetDiscountAsync(string discountCode)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<DiscountDto>>(new RequestDto()
             {
                 ApiType = ApiType.GET,
                 Url = SD.DiscountAPIBase + "/api/discount/GetByCode/"+ discountCode
             });
         }
 
-        public async Task<ResponseDto?> GetDiscountByIdAsync(int id)
+        public async Task<ResponseDto<DiscountDto>?> GetDiscountByIdAsync(int id)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<DiscountDto>>(new RequestDto()
             {
                 ApiType = ApiType.GET,
                 Url = SD.DiscountAPIBase + "/api/discount/"+ id
             });
         }
 
-        public async Task<ResponseDto?> UpdateDiscountAsync(DiscountDto discountDto)
+        public async Task<ResponseDto<DiscountDto>?> UpdateDiscountAsync(DiscountDto discountDto)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<DiscountDto>>(new RequestDto()
             {
                 ApiType = ApiType.PUT,
                 Data = discountDto,

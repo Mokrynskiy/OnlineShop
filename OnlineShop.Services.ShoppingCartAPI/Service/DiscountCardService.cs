@@ -22,11 +22,12 @@ namespace OnlineShop.Services.ShoppingCartAPI.Service
             var client = _httpClientFactory.CreateClient("DiscountCard");
             var response = await client.GetAsync($"/api/discountCard");
             var apiContent = await response.Content.ReadAsStringAsync();
-            var resp = JsonConvert.DeserializeObject<ResponseDTO>(apiContent);
+            var resp = JsonConvert.DeserializeObject<ResponseDto<DiscountDTO>>(apiContent);
 
             if (resp != null && resp.IsSuccess)
             {
-                return JsonConvert.DeserializeObject<DiscountDTO>(Convert.ToString(resp.Result));
+                return resp.Result;
+                //return JsonConvert.DeserializeObject<DiscountDTO>(Convert.ToString(resp.Result));
             }
 
             return new DiscountDTO();

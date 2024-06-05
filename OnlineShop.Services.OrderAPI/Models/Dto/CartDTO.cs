@@ -1,8 +1,8 @@
 ﻿namespace OnlineShop.Services.OrderAPI.Models.DTO
 {
-    public class CartDTO
+    public class CartDto
     {
-        public CartHeaderDTO CartHeaderDTO { get; set; }
-        public IEnumerable<CartDetailsDTO>? CartDetails { get; set; }
+        public CartHeaderDto CartHeaderDTO { get; set; }
+        public IEnumerable<CartDetailsDto>? CartDetails { get; set; }
     }
 }

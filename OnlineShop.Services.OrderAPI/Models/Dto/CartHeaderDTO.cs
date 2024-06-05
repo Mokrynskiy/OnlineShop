@@ -1,6 +1,6 @@
 ﻿namespace OnlineShop.Services.OrderAPI.Models.DTO
 {
-    public class CartHeaderDTO
+    public class CartHeaderDto
     {
         public int CartHeaderId { get; set; }
         public string? UserId { get; set; }

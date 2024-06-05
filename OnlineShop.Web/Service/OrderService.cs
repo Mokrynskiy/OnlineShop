@@ -1,7 +1,7 @@
-﻿using OnlineShop.Web.Models;
+﻿using OnlineShop.Services.OrderAPI.Models.Dto;
+using OnlineShop.Web.Models;
 using OnlineShop.Web.Service.IService;
 using OnlineShop.Web.Utility;
-using static OnlineShop.Web.Utility.SD;
 
 namespace OnlineShop.Web.Service
 {
@@ -13,9 +13,9 @@ namespace OnlineShop.Web.Service
             _baseService = baseService;    
         }
 
-        public async Task<ResponseDto?> CreateOrder(CartDTO cartDTO)
+        public async Task<ResponseDto<OrderHeaderDto>?> CreateOrder(CartDto cartDTO)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<OrderHeaderDto>>(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = cartDTO,
@@ -23,27 +23,27 @@ namespace OnlineShop.Web.Service
             });
         }
 
-        public async Task<ResponseDto?> GetAllOrders(string? userId)
+        public async Task<ResponseDto<IEnumerable<OrderHeaderDto>>?> GetAllOrders(string? userId)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<IEnumerable<OrderHeaderDto>>>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
                 Url = SD.OrderAPIBase + "/api/order/GetOrders/" + userId
             });
         }
 
-        public async Task<ResponseDto?> GetOrder(int orderId)
+        public async Task<ResponseDto<IEnumerable<OrderHeaderDto>>?> GetOrder(int orderId)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<IEnumerable<OrderHeaderDto>>>(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,                
                 Url = SD.OrderAPIBase + "/api/order/GetOrder/" + orderId
             });
         }
 
-        public async Task<ResponseDto?> UpdateOrderStatus(int orderId, string newStatus)
+        public async Task<ResponseDto<bool>?> UpdateOrderStatus(int orderId, string newStatus)
         {
-            return await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<bool>>(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = newStatus,

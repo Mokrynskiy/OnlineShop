@@ -14,7 +14,6 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
     {
         private readonly AppDbContext _db;
         private IMapper _mapper;
-        private ResponseDTO _response;
         private IProductService _productService;
         private IDiscountCardService _discountCardService;
 
@@ -22,7 +21,6 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         {
             _db = db;
             _mapper = mapper;
-            _response = new ResponseDTO();
             _productService = productService;
             _discountCardService = discountCardService;
         }
@@ -33,8 +31,9 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         /// <param name="cartDTO"></param>
         /// <returns></returns>
         [HttpPost("CartAdd")]
-        public async Task<ResponseDTO?> CartAdd(CartDTO cartDTO) 
+        public async Task<ResponseDto<CartDto>?> CartAdd(CartDto cartDTO) 
         {
+            var _response = new ResponseDto<CartDto>();
             try
             {
                 var cartHeaderDb = await _db.CartHeaders.AsNoTracking().FirstOrDefaultAsync(x => x.UserId == cartDTO.CartHeaderDTO.UserId);
@@ -88,8 +87,9 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         /// <param name="cartDTO"></param>
         /// <returns></returns>
         [HttpPost("ApplyDiscountCard")]
-        public async Task<object> ApplyDiscountCard([FromBody] CartDTO cartDTO)
+        public async Task<ResponseDto<bool>> ApplyDiscountCard([FromBody] CartDto cartDTO)
         {
+            var _response = new ResponseDto<bool>();
             try
             {
                 var cartDb = _db.CartHeaders.First(x => x.UserId == cartDTO.CartHeaderDTO.UserId);
@@ -114,8 +114,9 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         /// <param name="cartDTO"></param>
         /// <returns></returns>
         [HttpPost("RemoveDiscountCard")]
-        public async Task<object> RemoveDiscountCard([FromBody] CartDTO cartDTO)
+        public async Task<ResponseDto<bool>> RemoveDiscountCard([FromBody] CartDto cartDTO)
         {
+            var _response = new ResponseDto<bool>();
             try
             {
                 var cartDb = _db.CartHeaders.First(x => x.UserId == cartDTO.CartHeaderDTO.UserId);
@@ -140,8 +141,9 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         /// <param name="cartDetailsId"></param>
         /// <returns></returns>
         [HttpPost("RemoveCart")]
-        public async Task<ResponseDTO?> RemoveCart(int cartDetailsId)
+        public async Task<ResponseDto<bool>?> RemoveCart(int cartDetailsId)
         {
+            var _response = new ResponseDto<bool>();
             try
             {
                 var cartDetails = _db.CartDetails.First(x => x.CartDetailsId == cartDetailsId);
@@ -169,15 +171,16 @@ namespace OnlineShop.Services.ShoppingCartAPI.Controllers
         }
 
         [HttpGet("GetCart")]
-        public async Task<ResponseDTO?> GetCart(string userId)
+        public async Task<ResponseDto<CartDto>?> GetCart(string userId)
         {
+            var _response = new ResponseDto<CartDto>();
             try
             {
                 var cartHeadersFind = _db.CartHeaders.FirstOrDefault(x => x.UserId == userId);
 
                 var cartHeaderDTO = _mapper.Map<CartHeaderDTO>(cartHeadersFind);
 
-                var cart = new CartDTO()
+                var cart = new CartDto()
                 {
                     CartHeaderDTO = cartHeaderDTO
                 };

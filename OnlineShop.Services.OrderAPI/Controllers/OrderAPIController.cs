@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Services.OrderAPI.Data;
@@ -12,27 +11,26 @@ using OnlineShop.Services.OrderAPI.Utility;
 
 namespace OnlineShop.Services.OrderAPI.Controllers
 {
-    [Route("api/order ")]
+    [Route("api/order")]
     [ApiController]
     public class OrderAPIController : ControllerBase
     {
         private readonly AppDbContext _db;
         private IMapper _mapper;
-        private ResponseDto _response;
         private IProductService _productService;
 
         public OrderAPIController(AppDbContext db, IMapper mapper, IProductService productService)
         {
             _db = db;
             _mapper = mapper;
-            _response = new ResponseDto();
             _productService = productService;
         }
 
         [Authorize]
         [HttpGet("GetOrders")]
-        public async Task<ResponseDto?> Get(string? userId = "") 
+        public async Task<ResponseDto<IEnumerable<OrderHeaderDto>>?> Get(string? userId = "") 
         {
+            var _response = new ResponseDto<IEnumerable<OrderHeaderDto>>();
             try
             {
                 IEnumerable<OrderHeader> objList;
@@ -45,7 +43,7 @@ namespace OnlineShop.Services.OrderAPI.Controllers
                     objList = await _db.OrderHeaders.Include(x => x.OrderDetails).Where(x => x.UserId == userId).OrderByDescending(x => x.OrderHeaderId).ToListAsync();
                 }
 
-                _response.Result  = _mapper.Map<IEnumerable<OrderHeaderDTO>>(objList);
+                _response.Result  = _mapper.Map<IEnumerable<OrderHeaderDto>>(objList);
             }
             catch(Exception ex) 
             {
@@ -58,12 +56,13 @@ namespace OnlineShop.Services.OrderAPI.Controllers
 
         [Authorize]
         [HttpGet("GetOrder/{id:int}")]
-        public async Task<ResponseDto?> Get(int id)
+        public async Task<ResponseDto<OrderHeaderDto>?> Get(int id)
         {
+            var _response = new ResponseDto<OrderHeaderDto>();
             try
             {
-                OrderHeader orderHeader = await _db.OrderHeaders.Include(u=>u.OrderDetails).FirstAsync(u=>u.OrderHeaderId == id);
-                _response.Result = _mapper.Map<OrderHeaderDTO>(orderHeader);
+                var orderHeader = await _db.OrderHeaders.Include(u=>u.OrderDetails).FirstAsync(u=>u.OrderHeaderId == id);
+                _response.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
             }
             catch (Exception ex)
             {
@@ -76,16 +75,17 @@ namespace OnlineShop.Services.OrderAPI.Controllers
 
         [Authorize]
         [HttpPost("CreateOrder")]
-        public async Task<ResponseDto?> CreateOrder([FromBody] CartDTO cartDTO)
+        public async Task<ResponseDto<OrderHeaderDto>?> CreateOrder([FromBody] CartDto cartDTO)
         {
+            var _response = new ResponseDto<OrderHeaderDto>();
             try
             {
-                OrderHeaderDTO orderHeaderDTO = _mapper.Map<OrderHeaderDTO>(cartDTO.CartHeaderDTO);
+                var orderHeaderDTO = _mapper.Map<OrderHeaderDto>(cartDTO.CartHeaderDTO);
                 orderHeaderDTO.OrderTime = DateTime.Now;
                 orderHeaderDTO.Status = SD.Status_Pending;
-                orderHeaderDTO.OrderDetails = _mapper.Map<IEnumerable<OrderDetailsDTO>>(cartDTO.CartDetails);
+                orderHeaderDTO.OrderDetails = _mapper.Map<IEnumerable<OrderDetailsDto>>(cartDTO.CartDetails);
 
-                OrderHeader orderCreated = _db.OrderHeaders.Add(_mapper.Map<OrderHeader>(orderHeaderDTO)).Entity;
+                var orderCreated = _db.OrderHeaders.Add(_mapper.Map<OrderHeader>(orderHeaderDTO)).Entity;
                 await _db.SaveChangesAsync();
 
                 orderHeaderDTO.OrderHeaderId = orderCreated.OrderHeaderId;
@@ -103,11 +103,12 @@ namespace OnlineShop.Services.OrderAPI.Controllers
 
         [Authorize]
         [HttpPost("UpdateOrderStatus/{orderId:int}")]
-        public async Task<ResponseDto> UpdateOrderStatus(int orderId, [FromBody] string newStatus)
+        public async Task<ResponseDto<bool>> UpdateOrderStatus(int orderId, [FromBody] string newStatus)
         {
+            var _response = new ResponseDto<bool>();
             try
             {
-                OrderHeader orderHeader = _db.OrderHeaders.First(x => x.OrderHeaderId == orderId);
+                var orderHeader = _db.OrderHeaders.First(x => x.OrderHeaderId == orderId);
                 if(orderHeader != null)
                 {
                     if(newStatus != null)
@@ -120,7 +121,7 @@ namespace OnlineShop.Services.OrderAPI.Controllers
                         {
                             orderHeader.Status = newStatus;
                         }
-                        
+                        _response.Result = true;
                         _db.SaveChanges();
                     }
                 }

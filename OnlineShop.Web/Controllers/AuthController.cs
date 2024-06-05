@@ -31,11 +31,12 @@ namespace OnlineShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequestDto obj)
         {
-            ResponseDto responseDto = await _authService.LoginAsync(obj);
+            var responseDto = await _authService.LoginAsync(obj);
             
             if (responseDto != null && responseDto.IsSuccess)
             {
-                LoginResponseDto loginResponseDto = JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(responseDto.Result));
+                //LoginResponseDto loginResponseDto = JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(responseDto.Result));
+                LoginResponseDto loginResponseDto = responseDto.Result;
                 await SignInUser(loginResponseDto);
                 _tokenProvider.SetToken(loginResponseDto.Token);
                 return RedirectToAction("Index", "Home");
@@ -62,15 +63,15 @@ namespace OnlineShop.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegistrationRequestDto obj)
         {
-            ResponseDto result = await _authService.RegisterAsync(obj);
-            ResponseDto assignRole;
+            var result = await _authService.RegisterAsync(obj);
+
             if (result != null && result.IsSuccess)
             {
                 if (string.IsNullOrEmpty(obj.Role))
                 {
                     obj.Role = SD.RoleCustomer;
                 }
-                assignRole = await _authService.AssignRoleAsync(obj);
+                var assignRole = await _authService.AssignRoleAsync(obj);
                 if (assignRole != null && assignRole.IsSuccess)
                 {
                     TempData["success"] = "Успешная регистрация";

@@ -5,6 +5,6 @@ namespace OnlineShop.Services.OrderAPI.Service.IService
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductDTO>> GetProducts();
+        Task<IEnumerable<ProductDto>> GetProducts();
     }
 }

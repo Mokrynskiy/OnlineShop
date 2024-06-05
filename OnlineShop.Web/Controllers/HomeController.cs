@@ -48,7 +48,7 @@ public class HomeController : Controller
     [ActionName("ProductionDetails")]
     public async Task<IActionResult> ProductDetails(ProductDto productDto)
     {
-        var cart = new CartDTO()
+        var cart = new CartDto()
         {
             CartHeaderDTO = new CartHeaderDTO
             {

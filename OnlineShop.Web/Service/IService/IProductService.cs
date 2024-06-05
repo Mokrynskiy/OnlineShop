@@ -4,10 +4,10 @@ namespace OnlineShop.Web.Service.IService
 {
     public interface IProductService
     {
-        Task<ResponseDto?> GetAllProductsAsync();
-        Task<ResponseDto?> GetProductByIdAsync(int id);
-        Task<ResponseDto?> CreateProductAsync(ProductDto ProductDto);
-        Task<ResponseDto?> UpdateProductAsync(ProductDto ProductDto);
-        Task<ResponseDto?> DeleteProductAsync(int id);
+        Task<ResponseDto<IEnumerable<ProductDto>>?> GetAllProductsAsync();
+        Task<ResponseDto<ProductDto>?> GetProductByIdAsync(int id);
+        Task<ResponseDto<ProductDto>?> CreateProductAsync(ProductDto ProductDto);
+        Task<ResponseDto<ProductDto>?> UpdateProductAsync(ProductDto ProductDto);
+        Task<ResponseDto<int>?> DeleteProductAsync(int id);
     }
 }

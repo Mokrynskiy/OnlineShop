@@ -4,8 +4,8 @@ namespace OnlineShop.Web.Service.IService
 {
     public interface IAuthService
     {
-        Task<ResponseDto?> LoginAsync(LoginRequestDto loginRequestDto);
-        Task<ResponseDto?> RegisterAsync(RegistrationRequestDto registrationRequestDto);
-        Task<ResponseDto?> AssignRoleAsync(RegistrationRequestDto registrationRequestDto);
+        Task<ResponseDto<LoginResponseDto>?> LoginAsync(LoginRequestDto loginRequestDto);
+        Task<ResponseDto<string>?> RegisterAsync(RegistrationRequestDto registrationRequestDto);
+        Task<ResponseDto<bool>?> AssignRoleAsync(RegistrationRequestDto registrationRequestDto);
     }
 }

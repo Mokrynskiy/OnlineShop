@@ -12,19 +12,21 @@ namespace OnlineShop.Services.OrderAPI.Service
             _httpClientFactory = clientFactory;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetProducts()
+        public async Task<IEnumerable<ProductDto>> GetProducts()
         {
             var client = _httpClientFactory.CreateClient("Product");
             var response = await client.GetAsync($"/api/product");
             var apiContent = await response.Content.ReadAsStringAsync();
-            var resp = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
+            //var resp = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
+            var resp = JsonConvert.DeserializeObject<ResponseDto<IEnumerable<ProductDto>>>(apiContent);
 
             if (resp.IsSuccess)
             {
-                return JsonConvert.DeserializeObject<IEnumerable<ProductDTO>>(Convert.ToString(resp.Result));
+                //return JsonConvert.DeserializeObject<IEnumerable<ProductDto>>(Convert.ToString(resp.Result));
+                return resp.Result;
             }
 
-            return new List<ProductDTO>();
+            return new List<ProductDto>();
         }
     }
 }

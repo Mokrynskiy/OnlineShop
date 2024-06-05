@@ -16,7 +16,7 @@ namespace OnlineShop.Web.Service
             _httpClientFactory = httpClientFactory;
             _tokenProvider = tokenProvider;
         }
-        public async Task<ResponseDto?> SendAsync(RequestDto requestDto, bool withBearer = true)
+        public async Task<TResult?>SendAsync<TResult>(RequestDto requestDto, bool withBearer = true) where TResult : IResponseDto, new()
         {
             try
             {
@@ -51,11 +51,11 @@ namespace OnlineShop.Web.Service
                         message.Method = HttpMethod.Get;
                         break;
                 }                
-                return await GetResponceData(await client.SendAsync(message));                
+                return await GetResponceData<TResult>(await client.SendAsync(message));                
             }
             catch (Exception ex)
             {
-                return new ResponseDto
+                return new TResult
                 {
                     Message = ex.Message,
                     IsSuccess = false
@@ -64,7 +64,7 @@ namespace OnlineShop.Web.Service
             
         }
 
-        private async Task<ResponseDto?> GetResponceData(HttpResponseMessage responceMessage)
+        private async Task<TResult?> GetResponceData<TResult>(HttpResponseMessage responceMessage) where TResult : IResponseDto, new()
         {
             switch (responceMessage.StatusCode)
             {
@@ -78,8 +78,7 @@ namespace OnlineShop.Web.Service
                     return new() { IsSuccess = false, Message = "Internal Server Error" };
                 default:
                     var apiContent = await responceMessage.Content.ReadAsStringAsync();
-                    var apiResponseDto = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
-                    return apiResponseDto;
+                    return JsonConvert.DeserializeObject<TResult>(apiContent);
             }
         }
 
