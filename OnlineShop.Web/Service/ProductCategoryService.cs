@@ -51,18 +51,18 @@ namespace OnlineShop.Web.Service
             });
         }
 
-        public async Task<ResponseDto<ProductDto>?> GetProductCategoryByIdAsync(int id)
+        public async Task<ResponseDto<ProductCategoryDto>?> GetProductCategoryByIdAsync(int id)
         {
-            return await _baseService.SendAsync<ResponseDto<ProductDto>>(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<ProductCategoryDto>>(new RequestDto()
             {
                 ApiType = ApiType.GET,
                 Url = SD.ProductCategoryAPIBase + "/api/productCategory/"+ id
             });
         }
 
-        public async Task<ResponseDto<ProductDto>?> UpdateProductCategoryAsync(ProductCategoryDto ProductCategoryDto)
+        public async Task<ResponseDto<ProductCategoryDto>?> UpdateProductCategoryAsync(ProductCategoryDto ProductCategoryDto)
         {
-            return await _baseService.SendAsync<ResponseDto<ProductDto>>(new RequestDto()
+            return await _baseService.SendAsync<ResponseDto<ProductCategoryDto>>(new RequestDto()
             {
                 ApiType = ApiType.PUT,
                 Data = ProductCategoryDto,

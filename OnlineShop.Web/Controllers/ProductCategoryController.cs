@@ -54,7 +54,8 @@ namespace OnlineShop.Web.Controllers
             var response = await _productCategoryService.GetProductCategoryByIdAsync(productCategoryId);
             if (response != null && response.IsSuccess)
             {
-                ProductCategoryDto? model = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductCategoryDto>(Convert.ToString(response.Result));
+                //ProductCategoryDto? model = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductCategoryDto>(Convert.ToString(response.Result));
+                ProductCategoryDto? model = response.Result;
                 if (model != null)
                 {                    
                     return View(model);
@@ -68,7 +69,7 @@ namespace OnlineShop.Web.Controllers
             var response = await _productCategoryService.DeleteProductCategoryAsync(model.Id);
             if (response != null && response.IsSuccess)
             {
-                ProductCategoryDto? responce = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductCategoryDto>(Convert.ToString(response.Result));
+                //ProductCategoryDto? responce = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductCategoryDto>(Convert.ToString(response.Result));
                 if (model != null)
                 {
                     TempData["success"] = "Товарная группа успешно удалена!";

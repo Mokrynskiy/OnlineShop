@@ -33,17 +33,17 @@ namespace OnlineShop.Web.Controllers
         {
             var responseDto = await _authService.LoginAsync(obj);
             
-            if (responseDto != null && responseDto.IsSuccess)
+            if (responseDto?.Result != null && responseDto.IsSuccess)
             {
                 //LoginResponseDto loginResponseDto = JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(responseDto.Result));
-                LoginResponseDto loginResponseDto = responseDto.Result;
+                var loginResponseDto = responseDto.Result;
                 await SignInUser(loginResponseDto);
                 _tokenProvider.SetToken(loginResponseDto.Token);
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                TempData["error"] = responseDto.Message;
+                TempData["error"] = responseDto?.Message ?? "NULL";
                 return View(obj);
             }
         }

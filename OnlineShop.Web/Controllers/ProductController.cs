@@ -84,7 +84,7 @@ namespace OnlineShop.Web.Controllers
             var response = await _productService.GetProductByIdAsync(productId);
             if (response != null && response.IsSuccess)
             {
-                ProductDto? model = response.Result;
+                var model = response.Result;
                 //ProductDto? model = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
                 if (model != null)
                 {

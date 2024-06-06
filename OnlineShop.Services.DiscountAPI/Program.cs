@@ -1,12 +1,8 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using OnlineShop.Services.DiscountAPI;
 using OnlineShop.Services.DiscountAPI.Data;
 using OnlineShop.Services.DiscountAPI.Extensions;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 

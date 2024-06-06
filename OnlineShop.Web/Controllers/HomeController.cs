@@ -26,9 +26,10 @@ public class HomeController : Controller
     {
         List<ProductDto> list = new();
         var response = await _productService.GetAllProductsAsync();
-        if (response != null && response.IsSuccess)
+        if (response?.Result != null && response.IsSuccess)
         {
-            list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+            //list = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+            list = (List<ProductDto>)response.Result;
         }
         return View(list);
     }
@@ -86,7 +87,8 @@ public class HomeController : Controller
         var response = await _productService.GetProductByIdAsync(productId);
         if (response != null && response.IsSuccess)
         {
-            model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+            //model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+            model = response.Result;
         }
         return View(model);
     }

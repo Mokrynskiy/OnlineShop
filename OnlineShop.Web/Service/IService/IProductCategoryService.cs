@@ -6,9 +6,9 @@ namespace OnlineShop.Web.Service.IService
     {
         Task<ResponseDto<ProductDto>?> GetProductCategoryAsync(string name);
         Task<ResponseDto<IEnumerable<ProductDto>>?> GetAllProductCategorysAsync();
-        Task<ResponseDto<ProductDto>?> GetProductCategoryByIdAsync(int id);
+        Task<ResponseDto<ProductCategoryDto>?> GetProductCategoryByIdAsync(int id);
         Task<ResponseDto<ProductDto>?> CreateProductCategoryAsync(ProductCategoryDto ProductCategoryDto);
-        Task<ResponseDto<ProductDto>?> UpdateProductCategoryAsync(ProductCategoryDto ProductCategoryDto);
+        Task<ResponseDto<ProductCategoryDto>?> UpdateProductCategoryAsync(ProductCategoryDto ProductCategoryDto);
         Task<ResponseDto<int>?> DeleteProductCategoryAsync(int id);
     }
 }
