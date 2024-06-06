@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
 using OnlineShop.Web.Models;
 using OnlineShop.Web.Service.IService;
 using OnlineShop.Web.Utility;
